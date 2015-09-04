@@ -1,0 +1,138 @@
+*{  
+  margin:0;
+  padding:0;
+}
+
+body{
+  
+  background-color:#f0f0f0;
+  font-family:helvetica;
+}
+
+a{
+  display:block;
+  color:#ad5482;  
+  text-decoration:none;
+  font-weight:bold;
+  margin-top:40px;
+  text-align:center;
+}
+
+#bg{
+  position:relative;
+  top:20px;
+  height:600px;
+  width:800px;
+  background-size:cover;
+  margin-left:auto;
+  margin-right:auto; 
+}
+
+.module{
+  position:relative;
+  top:2%;
+  height:593px;
+  width:450px;
+  overflow:hidden;
+  margin-left:auto;
+  margin-right:auto;
+  border-radius:5px;
+}
+
+
+.tab{
+  height:60px;
+  width:16.66667%;
+  box-sizing:border-box;
+  background:#DDDDDD;  
+  text-align:center;
+  cursor:pointer;
+  transition:background .4s;
+}
+
+.tab:first-child{  
+  -webkit-border-radius: 5px 0px 0px 0px;
+  border-radius: 5px 0px 0px 0px;
+}
+
+.tab:last-child{  
+  -webkit-border-radius: 0px 5px 0px 0px;
+  border-radius: 0px 5px 0px 0px;
+}
+
+.tab:hover{  
+  background-color:#EEEEEE;
+}
+
+.activeTab, .activeTab:hover{
+  background:#fff;
+}
+
+.activeTab .icon{
+  opacity:1;
+}
+
+.icon{
+  height:24px;
+  width:24px;
+  opacity:.2;
+}
+
+.form{
+  float:left;
+  height:86%;
+  width:2700px;
+  box-sizing:border-box;
+}
+.subform{
+  border:0px;
+  width:370px;
+  padding:40px;
+  position:relative;
+  left:0px;
+  background:#FFFFFF;
+  border-bottom:2px solid #DDDDDD;
+  float:left;
+}
+
+.textbox{
+  height:50px;
+  width:100%;
+  border-radius:3px;
+  border:rgba(0,0,0,.3) 2px solid;
+  box-sizing:border-box;
+  padding:10px;
+  margin-bottom:30px;
+}
+
+.textbox:focus{
+  outline:none;
+   border:rgba(24,149,215,1) 2px solid;
+   color:rgba(24,149,215,1);
+}
+
+.button{
+  height:50px;
+  margin: 0 5%;
+  width:37.5%;
+  border-radius:3px;
+  border:rgba(0,0,0,.3) 0px solid;
+  box-sizing:border-box;
+  background:#90c843;
+  color:#FFF;
+  font-weight:bold;
+  font-size: 12pt;
+  transition:background .4s;
+  cursor:pointer;
+}
+
+.button:hover{
+  background:#80b438;
+  
+}
+
+.slider{
+  width:2700px;
+  position:relative;
+  left:-450px;
+}
