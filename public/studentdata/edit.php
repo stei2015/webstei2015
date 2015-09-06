@@ -49,7 +49,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){ //proses hasil submit form data induk
 	
 	//filter input
 	$_POST['noreg'] = filter_var($_POST['noreg'], FILTER_SANITIZE_NUMBER_INT);
-	$_POST['tanggallahir'] = new Date($_POST['tanggallahir']);
+	$_POST['tanggallahir'] = filter_var($_POST['tanggallahir'], FILTER_SANITIZE_STRING);
 	$_POST['kodeposasal'] = filter_var($_POST['kodeposasal'], FILTER_SANITIZE_NUMBER_INT);
 	$_POST['kodeposstudi'] = filter_var($_POST['kodeposstudi'], FILTER_SANITIZE_NUMBER_INT);
 	$_POST['hp'] = filter_var($_POST['hp'], FILTER_SANITIZE_STRING);
@@ -60,7 +60,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){ //proses hasil submit form data induk
 	if($result->num_rows > 0){
 
 		//data induk sudah pernah diisi, update
-		$sql = "UPDATE studentdata SET 
+		$sql = "UPDATE studentdata SET
 				namalengkap = ?,
 				namapanggilan = ?,
 				noreg = ?,
@@ -121,7 +121,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){ //proses hasil submit form data induk
 
 		//data induk belum ada, insert
 		$sql = "INSERT INTO studentdata (
-				nim
+				nim,
 				namalengkap,
 				namapanggilan,
 				noreg,
@@ -145,9 +145,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){ //proses hasil submit form data induk
 				riwayatpenyakit,
 				bio,
 				catatan
-				) VALUES ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
+				) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		$stmt = $dbConnection->prepare($sql);
+
+		if ( !$stmt ) {
+    printf('errno: %d, error: %s', $dbConnection->errno, $dbConnection->error);
+    die;
+}
+
 		$stmt->bind_param('ississssssisisssssssssss',
 							$nim,
 							$_POST['namalengkap'],
