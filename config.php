@@ -1,8 +1,10 @@
 <?php
-$host = "mysql.idhostinger.com";
-$user = "u723809496_stei2";
-$pass = "forumITB STEI2015";
-$databasename = "u723809496_forum";
 
-$connection = mysqli_connect($host, $user, $pass, $databasename) or die("cannot Select DB");
+define('DB_HOST', '127.0.0.1');
+define('DB_USER', 'root');
+define('DB_PASSWORD', 'crossingfield');
+define('DB_NAME', 'webstei2015');
+
+define('ROOT_URL', '/webstei2015/public');
+
 ?>

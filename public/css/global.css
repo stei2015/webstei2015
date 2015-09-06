@@ -1,0 +1,42 @@
+
+.form-login {
+	max-width: 350px;
+	padding: 5px;
+	margin: 0 auto;
+	margin-top:10%;
+}
+
+.form-login .input-group {
+	margin-bottom: 5px;
+}
+
+.form-login .btn {
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+.form-register {
+	max-width: 500px;
+	padding: 5px;
+	margin: 0 auto;
+	margin-top: 4%;
+}
+
+.error-text {
+	display:none;
+}
+
+.has-error .error-text {
+	display: inline;
+	color: #F04124;
+}
+
+.callout {
+	background-color: #fff;
+	border-left: solid 5px #008cba;
+	padding: 10px 40px 20px 40px;
+}
+
+body {
+	background-color: #eee;
+}
