@@ -23,6 +23,11 @@ if($result->num_rows > 0){
 	redirect('studentdata/edit.php'); //jika blm isi data diri, redirect ke form data diri
 }
 
+//jika blm upload foto, redirect ke page utk upload foto
+
+$nim = filter_var($_SESSION['id'], FILTER_SANITIZE_NUMBER_INT);
+if(!file_exists(__DIR__.'/../data/profilepictures/'.$nim)) redirect('studentdata/editprofilepicture.php');
+
 redirect('forum');
 
 ?>

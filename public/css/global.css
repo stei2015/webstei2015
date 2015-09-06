@@ -40,3 +40,59 @@
 body {
 	background-color: #eee;
 }
+
+
+
+
+
+.sidebar {
+  width: 250px;
+  position: fixed;
+  top:45px;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  background-color: #222;
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-top: 20px;
+}
+
+.nav-sidebar > li.caption {
+  padding: 5px 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: @font-size-small;
+}
+
+.nav-sidebar > li > a {
+  color: #bbb;
+  padding: 8px 20px;
+}
+
+.nav-sidebar > li > a:hover,
+.nav-sidebar > li > a:focus {
+  background-color: #333;
+  outline: none;
+}
+
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #555;
+}
+
+.container.container-sidebar {
+  padding-left: 260px;
+}
+
+.sidebar .progress {
+  height: 3px;
+  margin: 0;
+}

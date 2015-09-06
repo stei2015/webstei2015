@@ -5,14 +5,14 @@
 
 <div class="container">
 
-  <form class="form-register callout" method="POST" onsubmit="validateThenSubmit(); return false;">
+  <form class="form-register callout" method="POST">
     <h1>Data Diri</h1>
     <p>Data bertanda <span class="text-muted glyphicon glyphicon-lock"></span> tidak akan dipublikasikan</p>
     <br>
 
     <div class="form-group">
       <label for="nim">NIM</label>
-      <input type="text" id="nim" name="nim" class="form-control" value="<?php echo $nim; ?>" required <?php if($_SESSION['type'] != 'admin') echo 'readonly';  ?> >
+      <input type="text" id="nim" name="nim" class="form-control" value="<?php echo $nim; ?>" required readonly >
     </div>
 
     <div class="form-group">
