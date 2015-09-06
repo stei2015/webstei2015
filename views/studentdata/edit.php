@@ -183,7 +183,7 @@
     </div>
 
     <br>
-    <button class="btn btn-primary">Simpan <span class="glyphicon glyphicon-save"></span></button>
+    <button class="btn btn-primary">Simpan <span class="glyphicon glyphicon-check"></span></button>
     
   </form>
   <br><br>

@@ -1,0 +1,4 @@
+config.php
+*.sublime-*
+*.log
+data/**
