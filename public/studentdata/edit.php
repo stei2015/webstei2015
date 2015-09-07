@@ -7,7 +7,11 @@ require_once(__DIR__.'/../../include/database.php');
 ensureLogin();
 
 if($_SESSION['type'] == 'admin'){
-	$nim = $_GET['nim'] || $_POST['nim'] || $_SESSION['id']; //hanya admin yang bisa edit data orang lain
+
+	if(isset($_GET['nim'])) $nim = $_GET['nim'];
+	elseif(isset($_POST['nim'])) $nim = $_POST['nim'];
+	else $nim = $_SESSION['id'];  //hanya admin yang bisa edit data orang lain
+	
 } else {
 	$nim = $_SESSION['id'];
 }
