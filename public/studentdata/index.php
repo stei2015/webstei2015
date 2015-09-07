@@ -48,7 +48,35 @@ $stmt = $dbConnection->prepare($sql);
 
 if($doSearch) $stmt->bind_param('s', $_GET['search']);
 $stmt->execute();
-$result = $stmt->get_result();
+$stmt->store_result();
+$result = [];
+$stmt->bind_result(
+	$result['namalengkap'],
+	$result['namapanggilan'],
+	$result['noreg'],
+	$result['tempatlahir'],
+	$result['tanggallahir'],
+	$result['sma'],
+	$result['alamatasal'],
+	$result['kotaasal'],
+	$result['provinsiasal'],
+	$result['kodeposasal'],
+	$result['alamatstudi'],
+	$result['kodeposstudi'],
+	$result['hp'],
+	$result['telepondarurat'],
+	$result['email'],
+	$result['emailstudents'],
+	$result['line'],
+	$result['twitter'],
+	$result['facebook'],
+	$result['golongandarah'],
+	$result['riwayatpenyakit'],
+	$result['bio'],
+	$result['catatan']
+);
+$data = getResultArray($result, $stmt);
+$numRows = $stmt->num_rows;
 $stmt->close();
 
 include(__DIR__.'/../../views/studentdata/index.php');

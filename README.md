@@ -9,4 +9,5 @@
 5. Open phpmyadmin, import `webstei2015.sql` to the current database
 6. Open the website, register an account
 7. Using phpmyadmin, open the `users` table, change the `type` of your account to `admin`
+8. Don't forget to set write permissions to the `data` directory and its child directories
 

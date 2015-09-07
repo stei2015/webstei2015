@@ -13,4 +13,20 @@ if(!$dbConnection->set_charset("utf8")){
     die('Error setting character set to UTF-8');
 }
 
+function getResultArray(&$boundArray, &$stmt){
+
+	$numRows = $stmt->num_rows;
+	$result = [];
+
+	for ($i = 0; $i < $numRows; $i++){
+	    $stmt->data_seek($i);
+	    $stmt->fetch();
+	    foreach ($boundArray as $key => $val){
+	        $result[$i][$key]=$val;
+	    }
+	}
+
+	return $result;
+}
+
 ?>

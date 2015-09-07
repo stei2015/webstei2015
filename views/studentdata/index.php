@@ -58,9 +58,9 @@
 /*
   	if($_SESSION['type'] == 'admin'){
 
-  		if($result->num_rows > 0){
+  		if($numRows > 0){
 
-			while($resultRow = $result->fetch_object()){
+			foreach($data as $idx => $row)
 				?>
 
 					<tr>
@@ -78,9 +78,9 @@
 
   	} else {
 
-  		if($result->num_rows > 0){
+  		if($numRows > 0){
 
-			while($resultRow = $result->fetch_object()){
+			foreach($data as $idx => $row)
 				?>
 
 					<tr>

@@ -38,11 +38,39 @@ $stmt = $dbConnection->prepare("SELECT
 								riwayatpenyakit,
 								bio,
 								catatan
-								FROM studentdata WHERE nim = ?");
+								FROM studentdata WHERE nim = ? LIMIT 1");
 
 $stmt->bind_param('i', $nim);
 $stmt->execute();
-$result = $stmt->get_result();
+$stmt->store_result();
+$result = [];
+$stmt->bind_result(
+	$result['namalengkap'],
+	$result['namapanggilan'],
+	$result['noreg'],
+	$result['tempatlahir'],
+	$result['tanggallahir'],
+	$result['sma'],
+	$result['alamatasal'],
+	$result['kotaasal'],
+	$result['provinsiasal'],
+	$result['kodeposasal'],
+	$result['alamatstudi'],
+	$result['kodeposstudi'],
+	$result['hp'],
+	$result['telepondarurat'],
+	$result['email'],
+	$result['emailstudents'],
+	$result['line'],
+	$result['twitter'],
+	$result['facebook'],
+	$result['golongandarah'],
+	$result['riwayatpenyakit'],
+	$result['bio'],
+	$result['catatan']
+);
+$oldData = getResultArray($result, $stmt);
+$numRows = $stmt->num_rows;
 $stmt->close();
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){ //proses hasil submit form data induk
@@ -57,7 +85,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){ //proses hasil submit form data induk
 	$_POST['email'] = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 	$_POST['emailstudents'] = filter_var($_POST['emailstudents'], FILTER_SANITIZE_EMAIL);
 	
-	if($result->num_rows > 0){
+	if($numRows > 0){
 
 		//data induk sudah pernah diisi, update
 		$sql = "UPDATE studentdata SET
@@ -149,11 +177,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){ //proses hasil submit form data induk
 
 		$stmt = $dbConnection->prepare($sql);
 
-		if ( !$stmt ) {
-    printf('errno: %d, error: %s', $dbConnection->errno, $dbConnection->error);
-    die;
-}
-
 		$stmt->bind_param('ississssssisisssssssssss',
 							$nim,
 							$_POST['namalengkap'],
@@ -188,10 +211,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){ //proses hasil submit form data induk
 	redirect('forum');
 
 } else { //tampilkan page input data induk
-
-	if($result->num_rows > 0){ //jika data induk sudah diisi, ambil data lama
-		$oldData = $result->fetch_object();
-	}
 
 	include(__DIR__.'/../../views/studentdata/edit.php');
 }

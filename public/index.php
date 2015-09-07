@@ -9,15 +9,18 @@ ensureLogin();
 $stmt = $dbConnection->prepare("SELECT namapanggilan, tanggallahir,	email FROM studentdata WHERE nim = ? LIMIT 1");
 $stmt->bind_param('i', $_SESSION['id']);
 $stmt->execute();
-$result = $stmt->get_result();
+$stmt->store_result();
+$result = [];
+$stmt->bind_result($result['namapanggilan'], $result['tanggallahir'], $result['email']);
+$numRows = $stmt->num_rows;
+$users = getResultArray($result, $stmt);
 $stmt->close();
 
-if($result->num_rows > 0){
+if($numRows > 0){
 
-	$resultRow = $result->fetch_object();
-	$_SESSION['namapanggilan'] = $resultRow->namapanggilan;
-	$_SESSION['tanggallahir'] = $resultRow->tanggallahir;
-	$_SESSION['email'] = $resultRow->email;
+	$_SESSION['namapanggilan'] = $users[0]['namapanggilan'];
+	$_SESSION['tanggallahir'] = $users[0]['tanggallahir'];
+	$_SESSION['email'] = $users[0]['email'];
 
 } else {
 	redirect('studentdata/edit.php'); //jika blm isi data diri, redirect ke form data diri

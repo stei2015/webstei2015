@@ -17,42 +17,42 @@
 
     <div class="form-group">
       <label for="namalengkap">Nama lengkap</label>
-      <input type="text" name="namalengkap" class="form-control" value="<?php if(isset($oldData)) echo htmlspecialchars($oldData->namalengkap); ?>" required>
+      <input type="text" name="namalengkap" class="form-control" value="<?php if($numRows>0) echo htmlspecialchars($oldData[0]['namalengkap']); ?>" required>
     </div>
 
     <div class="form-group">
       <label for="namapanggilan">Nama panggilan</label>
-      <input type="text" name="namapanggilan" class="form-control" value="<?php if(isset($oldData)) echo htmlspecialchars($oldData->namapanggilan); ?>" required>
+      <input type="text" name="namapanggilan" class="form-control" value="<?php if($numRows>0) echo htmlspecialchars($oldData[0]['namapanggilan']); ?>" required>
     </div>
 
     <div class="form-group">
       <label for="noreg">Nomor registrasi <span class="text-muted glyphicon glyphicon-lock"></span></label>
-      <input type="text" name="noreg" class="form-control" value="<?php if(isset($oldData)) echo htmlspecialchars($oldData->noreg); ?>" required>
+      <input type="text" name="noreg" class="form-control" value="<?php if($numRows>0) echo htmlspecialchars($oldData[0]['noreg']); ?>" required>
     </div>
 
     <div class="form-group">
       <label for="tempatlahir">Tempat lahir <span class="text-muted glyphicon glyphicon-lock"></span></label>
-      <input type="text" name="tempatlahir" class="form-control" value="<?php if(isset($oldData)) echo htmlspecialchars($oldData->tempatlahir); ?>" required>
+      <input type="text" name="tempatlahir" class="form-control" value="<?php if($numRows>0) echo htmlspecialchars($oldData[0]['tempatlahir']); ?>" required>
     </div>
 
     <div class="form-group">
       <label for="tanggallahir">Tanggal lahir <span class="text-muted glyphicon glyphicon-lock"></span></label>
-      <input id="tanggallahir" type="text" name="tanggallahir" class="form-control" placeholder="yyyy-mm-dd" value="<?php if(isset($oldData)) echo htmlspecialchars($oldData->tanggallahir); ?>" required>
+      <input id="tanggallahir" type="text" name="tanggallahir" class="form-control" placeholder="yyyy-mm-dd" value="<?php if($numRows>0) echo htmlspecialchars($oldData[0]['tanggallahir']); ?>" required>
     </div>
 
     <div class="form-group">
       <label for="sma">SMA asal</label>
-      <input type="text" name="sma" class="form-control" value="<?php if(isset($oldData)) echo htmlspecialchars($oldData->sma); ?>" required>
+      <input type="text" name="sma" class="form-control" value="<?php if($numRows>0) echo htmlspecialchars($oldData[0]['sma']); ?>" required>
     </div>
 
     <div class="form-group">
       <label for="alamatasal">Alamat asal <span class="text-muted glyphicon glyphicon-lock"></span></label>
-      <textarea rows="4" name="alamatasal" class="form-control" required><?php if(isset($oldData)) echo htmlspecialchars($oldData->alamatasal); ?></textarea>
+      <textarea rows="4" name="alamatasal" class="form-control" required><?php if($numRows>0) echo htmlspecialchars($oldData[0]['alamatasal']); ?></textarea>
     </div>
 
     <div class="form-group">
       <label for="kotaasal">Kota asal</label>
-      <input type="text" name="kotaasal" class="form-control" value="<?php if(isset($oldData)) echo htmlspecialchars($oldData->kotaasal); ?>">
+      <input type="text" name="kotaasal" class="form-control" value="<?php if($numRows>0) echo htmlspecialchars($oldData[0]['kotaasal']); ?>">
     </div>
 
     <div class="form-group">
@@ -96,7 +96,7 @@
             'Sumatera Utara',
             'Yogyakarta'
           ];
-          $select = isset($oldData) ? $oldData->provinsiasal : '';
+          $select = $numRows>0 ? $oldData[0]['provinsiasal'] : '';
           foreach($options as $val){
             if($select == $val) echo '<option selected>'.$val.'</option>'; else echo '<option>'.$val.'</option>';
           }
@@ -106,52 +106,52 @@
 
     <div class="form-group">
       <label for="kodeposasal">Kode pos asal <span class="text-muted glyphicon glyphicon-lock"></span></label>
-      <input type="text" name="kodeposasal" class="form-control" value="<?php if(isset($oldData)) echo htmlspecialchars($oldData->kodeposasal); ?>">
+      <input type="text" name="kodeposasal" class="form-control" value="<?php if($numRows>0) echo htmlspecialchars($oldData[0]['kodeposasal']); ?>">
     </div>
 
     <div class="form-group">
       <label for="alamatstudi">Alamat di Bandung <span class="text-muted glyphicon glyphicon-lock"></span></label>
-      <textarea rows="4" name="alamatstudi" class="form-control" required><?php if(isset($oldData)) echo htmlspecialchars($oldData->alamatstudi); ?></textarea>
+      <textarea rows="4" name="alamatstudi" class="form-control" required><?php if($numRows>0) echo htmlspecialchars($oldData[0]['alamatstudi']); ?></textarea>
     </div>
 
     <div class="form-group">
       <label for="kodeposstudi">Kode pos di Bandung <span class="text-muted glyphicon glyphicon-lock"></span></label>
-      <input type="text" name="kodeposstudi" class="form-control" value="<?php if(isset($oldData)) echo htmlspecialchars($oldData->kodeposstudi); ?>">
+      <input type="text" name="kodeposstudi" class="form-control" value="<?php if($numRows>0) echo htmlspecialchars($oldData[0]['kodeposstudi']); ?>">
     </div>
 
     <div class="form-group">
       <label for="hp">Nomor HP <span class="text-muted glyphicon glyphicon-lock"></span></label>
-      <input type="text" name="hp" class="form-control" value="<?php if(isset($oldData)) echo htmlspecialchars($oldData->hp); ?>" required>
+      <input type="text" name="hp" class="form-control" value="<?php if($numRows>0) echo htmlspecialchars($oldData[0]['hp']); ?>" required>
     </div>
 
     <div class="form-group">
       <label for="telepondarurat">Nomor telepon darurat <span class="text-muted glyphicon glyphicon-lock"></span></label>
-      <input type="text" name="telepondarurat" class="form-control" value="<?php if(isset($oldData)) echo htmlspecialchars($oldData->telepondarurat); ?>" required>
+      <input type="text" name="telepondarurat" class="form-control" value="<?php if($numRows>0) echo htmlspecialchars($oldData[0]['telepondarurat']); ?>" required>
     </div>
 
     <div class="form-group">
       <label for="email">Email <span class="text-muted glyphicon glyphicon-lock"></span></label>
-      <input type="email" name="email" class="form-control" value="<?php if(isset($oldData)) echo htmlspecialchars($oldData->email); ?>" required>
+      <input type="email" name="email" class="form-control" value="<?php if($numRows>0) echo htmlspecialchars($oldData[0]['email']); ?>" required>
     </div>
 
     <div class="form-group">
       <label for="emailstudents">Email students.itb.ac.id</label>
-      <input type="email" name="emailstudents" class="form-control" value="<?php if(isset($oldData)) echo htmlspecialchars($oldData->emailstudents); ?>" required>
+      <input type="email" name="emailstudents" class="form-control" value="<?php if($numRows>0) echo htmlspecialchars($oldData[0]['emailstudents']); ?>" required>
     </div>
 
     <div class="form-group">
       <label for="line">LINE</label>
-      <input type="text" name="line" class="form-control" value="<?php if(isset($oldData)) echo htmlspecialchars($oldData->line); ?>">
+      <input type="text" name="line" class="form-control" value="<?php if($numRows>0) echo htmlspecialchars($oldData[0]['line']); ?>">
     </div>
 
     <div class="form-group">
       <label for="twitter">Twitter</label>
-      <input type="text" name="twitter" class="form-control" value="<?php if(isset($oldData)) echo htmlspecialchars($oldData->twitter); ?>">
+      <input type="text" name="twitter" class="form-control" value="<?php if($numRows>0) echo htmlspecialchars($oldData[0]['twitter']); ?>">
     </div>
 
     <div class="form-group">
       <label for="facebook">Facebook</label>
-      <input type="text" name="facebook" class="form-control" value="<?php if(isset($oldData)) echo htmlspecialchars($oldData->facebook); ?>">
+      <input type="text" name="facebook" class="form-control" value="<?php if($numRows>0) echo htmlspecialchars($oldData[0]['facebook']); ?>">
     </div>
 
     <div class="form-group">
@@ -159,7 +159,7 @@
       <select name="golongandarah" class="form-control">
         <?php
           $options = ['', 'A', 'B', 'AB', 'O'];
-          $select = isset($oldData) ? $oldData->golongandarah : '';
+          $select = $numRows>0 ? $oldData[0]['golongandarah'] : '';
           foreach($options as $val){
             if($select == $val) echo '<option selected>'.$val.'</option>'; else echo '<option>'.$val.'</option>';
           }
@@ -169,17 +169,17 @@
 
     <div class="form-group">
       <label for="riwayatpenyakit">Riwayat penyakit <span class="text-muted glyphicon glyphicon-lock"></span></label>
-      <textarea rows="4" name="riwayatpenyakit" class="form-control"><?php if(isset($oldData)) echo htmlspecialchars($oldData->riwayatpenyakit); ?></textarea>
+      <textarea rows="4" name="riwayatpenyakit" class="form-control"><?php if($numRows>0) echo htmlspecialchars($oldData[0]['riwayatpenyakit']); ?></textarea>
     </div>
 
     <div class="form-group">
       <label for="bio">Bio/deskripsi diri</label>
-      <textarea rows="4" name="bio" class="form-control"><?php if(isset($oldData)) echo htmlspecialchars($oldData->bio); ?></textarea>
+      <textarea rows="4" name="bio" class="form-control"><?php if($numRows>0) echo htmlspecialchars($oldData[0]['bio']); ?></textarea>
     </div>
 
     <div class="form-group">
       <label for="catatan">Catatan/keterangan lainnya <span class="text-muted glyphicon glyphicon-lock"></span></label>
-      <textarea rows="4" name="catatan" class="form-control"><?php if(isset($oldData)) echo htmlspecialchars($oldData->catatan); ?></textarea>
+      <textarea rows="4" name="catatan" class="form-control"><?php if($numRows>0) echo htmlspecialchars($oldData[0]['catatan']); ?></textarea>
     </div>
 
     <br>

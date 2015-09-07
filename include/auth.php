@@ -57,28 +57,30 @@ function login($username, $password){
         $stmt = $dbConnection->prepare("SELECT id, username, password, type FROM users WHERE id = ? OR username = ?");
         $stmt->bind_param('ss', $username, $username);
         $stmt->execute();
-        $result = $stmt->get_result();
+        $stmt->store_result();
+        $result = [];
+        $stmt->bind_result($result['id'], $result['username'], $result['password'], $result['type']);
+        $users = getResultArray($result, $stmt);
+        $numRows = $stmt->num_rows;
         $stmt->close();
-
-        if($result->num_rows == 1){
-
-            $result_row = $result->fetch_object();
+        
+        if($numRows == 1){
 
             //using PHP 5.5's password_verify() function to check if the provided password is correct
-            if(password_verify($password, $result_row->password)){
+            if(password_verify($password, $users[0]['password'])){
 
                 //write user data into PHP session
-                $_SESSION['id'] = $result_row->id;
-                $_SESSION['username'] = $result_row->username;
-                $_SESSION['type'] = $result_row->type;
+                $_SESSION['id'] = $users[0]['id'];
+                $_SESSION['username'] = $users[0]['username'];
+                $_SESSION['type'] = $users[0]['type'];
 
                 //bump lastlogin
                 $stmt = $dbConnection->prepare("UPDATE users SET lastlogin = ? WHERE id = ?");
-                $stmt->bind_param('si', date('Y-m-d H:i:s'), $result_row->id);
+                $stmt->bind_param('si', date('Y-m-d H:i:s'), $users[0]['id']);
                 $stmt->execute();
                 $stmt->close();
                 
-                $authMessages = 'Selamat datang, '.$result_row->username.'!';
+                $authMessages = 'Selamat datang, '.$users[0]['username'].'!';
                 return true;
 
             } else {
@@ -128,11 +130,12 @@ function register($nim, $username, $password, $type='user'){
         $stmt = $dbConnection->prepare("SELECT COUNT(*) as count FROM users WHERE username = ? OR id = ?");
         $stmt->bind_param('si', $username, $nim);
         $stmt->execute();
-        $result = $stmt->get_result();
+        $stmt->store_result();
+        $stmt->bind_result($count);
+        $stmt->fetch();
         $stmt->close();
 
-        $resultRow = $result->fetch_object();
-        if($resultRow->count > 0){
+        if($count > 0){
             $authErrors = 'Username atau NIM sudah ada';
             return false;
         }
