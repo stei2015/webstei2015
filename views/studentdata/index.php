@@ -4,57 +4,77 @@
 
   $activeSidebarSection = 'data';
   include(__DIR__.'/../parts/navigation.php');
+
 ?>
 
 <div class="page-container">
 	
-	<h1>Data Mahasiswa</h1>
+	<div class="page-header">
+		<h1>Data Mahasiswa</h1>
 
-  <p>test</p>
-
-  <?php
-/*
-  	if($_SESSION['type'] == 'admin'){
-
-  		if($numRows > 0){
-
-			foreach($data as $idx => $row)
-				?>
-
-					<tr>
-
-						<td>
-
-					</tr>
-
+		<form class="form-inline" method="GET">
+			<div class="input-group">
+				<input type="search" name="search" placeholder="Cari..." class="form-control" value="<?php if(isset($_GET['search'])) echo htmlspecialchars($_GET['search']); ?>">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="submit">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</span>
+			</div>
+			<select name="by" class="form-control">
 				<?php
-			}
-
-		} else {
-			echo '<p>Tidak ada data</p>';
-		}
-
-  	} else {
-
-  		if($numRows > 0){
-
-			foreach($data as $idx => $row)
+					if(isset($_GET['by'])) $selectedKey = $_GET['by']; else $selectedKey = 'namalengkap';
+					foreach($viewColumns as $key => $val){
+						if($key == $selectedKey) $selected = 'selected'; else $selected = '';
+						echo '<option value="'.$key.'" '.$selected.'>'.$val.'</option>';
+					}
 				?>
+			</select>
+		</form>
 
-					<tr>
+	</div>
+	
+  <div class="table-responsive">
+  	<table class="table table-hover">
+  		
+		  <?php
 
-						<td>
+		  		if($numRows > 0){
 
-					</tr>
+		  			?>
+		  				<thead>
+				  			<tr>
+				  				<?php
+				  					foreach($viewColumns as $key => $val){
+				  						echo '<th>'.htmlspecialchars($val).'</th>';
+				  					}
+				  				?>
+				  			</tr>
+				  		</thead>
+				  		<tbody>
+		  			<?php
 
-				<?php
-			}
+						foreach($data as $row){
+							?>
+								<tr>
+									<?php
+				  					foreach($viewColumns as $key => $val){
+				  						echo '<td>'.htmlspecialchars($row[$key]).'</td>';
+				  					}
+				  				?>
+								</tr>
+							<?php
+						}
+						echo '</tbody>';
 
-		} else {
-			echo '<p>Tidak ada data</p>';
-		}
-  	}*/
-  ?>
+					} else {
+						echo '<tr><td colspan="'.count($viewColumns).'">Tidak ada data</td></tr>';
+					}
+
+		  ?>
+
+   	</table>
+  </div>
 
 </div>
 

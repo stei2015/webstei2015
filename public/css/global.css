@@ -41,6 +41,10 @@ body {
 	background-color: #eee;
 }
 
+.page-header {
+  margin-top: 23px;
+}
+
 
 .navbar .navbar-brand, .navbar .user-display {
   font-weight: 700;
@@ -194,6 +198,11 @@ body {
     padding-top: 45px;
     padding-left: 250px;
     padding-right: 0px;
+  }
+
+  .page-header > .form-inline {
+    float:right;
+    margin-top: -50px;
   }
 
 }

@@ -13,6 +13,7 @@ if($_SESSION['type'] == 'admin'){
 }
 
 $sql = "SELECT
+		nim,
 		namalengkap,
 		namapanggilan,
 		noreg,
@@ -39,18 +40,20 @@ $sql = "SELECT
 		FROM studentdata";
 
 $doSearch = false;
-if(isset($_GET['search']) && isset($_GET['by']) && array_key_exists($_GET['by'], $validSearchCriteria)){
+if(isset($_GET['search']) && isset($_GET['by']) && in_array($_GET['by'], $validSearchCriteria)){
 	$sql = $sql . " WHERE ".$_GET['by']." LIKE ?";
 	$doSearch = true;
+	$searchQuery = '%'.$_GET['search'].'%';
 }
 
 $stmt = $dbConnection->prepare($sql);
 
-if($doSearch) $stmt->bind_param('s', $_GET['search']);
+if($doSearch) $stmt->bind_param('s', $searchQuery);
 $stmt->execute();
 $stmt->store_result();
 $result = [];
 $stmt->bind_result(
+	$result['nim'],
 	$result['namalengkap'],
 	$result['namapanggilan'],
 	$result['noreg'],
@@ -75,9 +78,52 @@ $stmt->bind_result(
 	$result['bio'],
 	$result['catatan']
 );
+
 $data = getResultArray($result, $stmt);
 $numRows = $stmt->num_rows;
 $stmt->close();
+
+if($_SESSION == 'admin'){
+	$viewColumns = [
+		'nim' => 'NIM',
+		'namalengkap' => 'Nama lengkap',
+		'namapanggilan' => 'Nama panggilan',
+		'noreg' => 'Nomor registrasi',
+		'tempatlahir' => 'Tempat lahir',
+		'tanggallahir' => 'Tanggal lahir',
+		'sma' => 'SMA asal',
+		'alamatasal' => 'Alamat asal',
+		'kotaasal' => 'Kota asal',
+		'provinsiasal' => 'Provinsi asal',
+		'kodeposasal' => 'Kode pos asal',
+		'alamatstudi' => 'Alamat di Bandung',
+		'kodeposstudi' => 'Kode pos di Bandung',
+		'hp' => 'Nomor HP',
+		'telepondarurat' => 'Telepon darurat',
+		'email' => 'Email',
+		'emailstudents' => 'Email students.itb.ac.id',
+		'line' => 'LINE',
+		'twitter' => 'Twitter',
+		'facebook' => 'Facebook',
+		'golongandarah' => 'Golongan darah',
+		'riwayatpenyakit' => 'Riwayat penyakit',
+		'bio' => 'Bio/deskripsi diri',
+	];
+
+} else {
+
+	$viewColumns = [
+		'nim' => 'NIM',
+		'namalengkap' => 'Nama lengkap',
+		'namapanggilan' => 'Nama panggilan',
+		'sma' => 'SMA asal',
+		'kotaasal' => 'Kota asal',
+		'provinsiasal' => 'Provinsi asal',
+		'line' => 'LINE',
+		'twitter' => 'Twitter',
+		'facebook' => 'Facebook'
+	];
+}
 
 include(__DIR__.'/../../views/studentdata/index.php');
 
