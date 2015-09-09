@@ -3,7 +3,7 @@
   <div class="container-fluid">
 
     <div class="navbar-header pull-left">
-      <a class="navbar-brand" href="#">STEI 2015</a>
+      <a class="navbar-brand" href="#">STEI ITB 2015</a>
     </div>
 
     <div class="navbar-header pull-right rightmost">
