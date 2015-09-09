@@ -42,37 +42,69 @@ body {
 }
 
 
+.navbar .navbar-brand, .navbar .user-display {
+  font-weight: 700;
+}
 
+.navbar-nav {
+  margin: 0;
+}
+
+.navbar-nav > li > a {
+  height: 45px;
+}
+
+.navbar .profile-picture {
+  width:45px;
+  height:45px;
+  margin: -19px -15px -19px 10px;
+}
 
 
 .sidebar {
-  width: 250px;
   position: fixed;
   top:45px;
-  bottom: 0;
+  right: 0;
   left: 0;
   z-index: 1000;
   display: block;
-  overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   background-color: #222;
 }
 
-/* Sidebar navigation */
+.page-container {
+  padding-top: 85px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
 .nav-sidebar {
-  margin-top: 20px;
+  float:left;
+}
+
+.nav-sidebar.right {
+  float:right;
+}
+
+.nav-sidebar > li {
+  float:left;
 }
 
 .nav-sidebar > li.caption {
-  padding: 5px 20px;
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: @font-size-small;
+  display:none;
 }
 
 .nav-sidebar > li > a {
+  font-size: 16px;
   color: #bbb;
-  padding: 8px 20px;
+  padding: 10px 14.3px;
+}
+
+.nav-sidebar > li > a > .link-text {
+  display:none;
+}
+
+.nav-sidebar > li > a > .glyphicon {
+  margin-right: 0;
 }
 
 .nav-sidebar > li > a:hover,
@@ -88,11 +120,69 @@ body {
   background-color: #555;
 }
 
-.container.container-sidebar {
-  padding-left: 260px;
+@media (min-width: 768px){
+
+  .navbar .profile-picture {
+    margin: -19px -15px -15px 10px;
+  }
+
+  .navbar-header.rightmost {
+    margin-right: -15px;
+  }
+
+  .sidebar {
+    width: 250px;
+    top:45px;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  }
+
+  /* Sidebar navigation */
+  .nav-sidebar {
+    margin-top: 20px;
+  }
+
+  .nav-sidebar > li.caption {
+    display:block;
+    padding: 5px 20px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: @font-size-small;
+  }
+
+  .nav-sidebar {
+    float:none;
+  }
+
+  .nav-sidebar.right {
+    float:none;
+  }
+
+  .nav-sidebar > li {
+    float:none;
+  }
+
+  .nav-sidebar > li > a {
+    padding: 10px 20px;
+  }
+
+  .nav-sidebar > li > a > .link-text {
+    display:inline;
+  }
+
+  .nav-sidebar > li > a > .glyphicon {
+    margin-right: 12px;
+  }
+
+  .page-container {
+    padding-top: 45px;
+    padding-left: 280px;
+    padding-right: 30px;
+  }
+
 }
 
-.sidebar .progress {
-  height: 3px;
-  margin: 0;
-}
+

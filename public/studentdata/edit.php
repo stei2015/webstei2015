@@ -212,7 +212,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){ //proses hasil submit form data induk
 	    $stmt->close();
 	}
 
-	redirect('forum');
+	redirect('index.php');
 
 } else { //tampilkan page input data induk
 
