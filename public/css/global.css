@@ -45,6 +45,13 @@ body {
   margin-top: 23px;
 }
 
+.table th {
+  white-space: nowrap;
+}
+.table-hover > tbody > tr {
+  cursor: pointer;
+}
+
 
 .navbar .navbar-brand, .navbar .user-display {
   font-weight: 700;

@@ -83,7 +83,7 @@ $data = getResultArray($result, $stmt);
 $numRows = $stmt->num_rows;
 $stmt->close();
 
-if($_SESSION == 'admin'){
+if($_SESSION['type'] == 'admin'){
 	$viewColumns = [
 		'nim' => 'NIM',
 		'namalengkap' => 'Nama lengkap',
@@ -106,8 +106,7 @@ if($_SESSION == 'admin'){
 		'twitter' => 'Twitter',
 		'facebook' => 'Facebook',
 		'golongandarah' => 'Golongan darah',
-		'riwayatpenyakit' => 'Riwayat penyakit',
-		'bio' => 'Bio/deskripsi diri',
+		'riwayatpenyakit' => 'Riwayat penyakit'
 	];
 
 } else {

@@ -56,7 +56,7 @@
 
 						foreach($data as $row){
 							?>
-								<tr>
+								<tr <?php if($_SESSION['type'] == 'admin') echo 'onclick="document.location=\''.ROOT_URL.'/studentdata/edit.php?nim='.filter_var($row['nim']).'\';"'; ?> >
 									<?php
 				  					foreach($viewColumns as $key => $val){
 				  						echo '<td>'.htmlspecialchars($row[$key]).'</td>';
