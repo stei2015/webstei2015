@@ -7,9 +7,9 @@ require_once(__DIR__.'/../../include/database.php');
 ensureLogin();
 
 if($_SESSION['type'] == 'admin'){
-	$validSearchCriteria = ['namalengkap', 'namapanggilan', 'noreg', 'tempatlahir', 'tanggallahir', 'sma', 'alamatasal', 'kotaasal', 'provinsiasal', 'kodeposasal', 'alamatstudi', 'kodeposstudi', 'hp', 'telepondarurat', 'email', 'emailstudents', 'line', 'twitter', 'facebook', 'golongandarah', 'riwayatpenyakit', 'bio', 'catatan'];
+	$validSearchCriteria = ['nim', 'namalengkap', 'namapanggilan', 'noreg', 'tempatlahir', 'tanggallahir', 'sma', 'alamatasal', 'kotaasal', 'provinsiasal', 'kodeposasal', 'alamatstudi', 'kodeposstudi', 'hp', 'telepondarurat', 'email', 'emailstudents', 'line', 'twitter', 'facebook', 'golongandarah', 'riwayatpenyakit', 'bio', 'catatan'];
 } else {
-	$validSearchCriteria = ['namalengkap', 'namapanggilan', 'sma', 'kotaasal', 'provinsiasal', 'alamatstudi', 'kodeposstudi', 'emailstudents', 'line', 'twitter', 'facebook', 'golongandarah', 'bio'];
+	$validSearchCriteria = ['nim', 'namalengkap', 'namapanggilan', 'sma', 'kotaasal', 'provinsiasal', 'emailstudents', 'line', 'twitter', 'facebook', 'bio'];
 }
 
 $sql = "SELECT

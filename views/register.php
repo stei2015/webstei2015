@@ -32,9 +32,22 @@
       <input id="confirmPassword" type="password" name="confirmPassword" class="form-control" required>
       <label class="error-text">Password dan konfirmasi harus sama</label>
     </div>
+
+    <?php
+      if(defined('REGCODE')){
+        ?>
+          <div class="form-group">
+            <label for="regcode">Kode Registrasi</label>
+            <input type="password" name="regcode" class="form-control" required>
+            <label>Kode registrasi diumumkan di kelas atau dapat ditanyakan di group</label>
+          </div>
+        <?php
+      }
+    ?>
     
     <br>
     <button class="btn btn-primary">Daftar <span class="glyphicon glyphicon-list-alt"></span></button>
+    <br><br>
     
     <?php
       if($authErrors) echo '<div class="alert alert-danger">'.htmlspecialchars($authErrors).'</div>';

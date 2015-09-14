@@ -5,6 +5,8 @@ define('DB_USER', 'u723809496_stei1');
 define('DB_PASSWORD', '<INSERT_DATABASE_PASSWORD_HERE>');
 define('DB_NAME', 'u723809496_stei1');
 
+//define('REGCODE', 'stei2015');
+
 define('ROOT_URL', '');
 
 ?>
