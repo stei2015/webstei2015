@@ -115,12 +115,12 @@ if($_SESSION['type'] == 'admin'){
 		'nim' => 'NIM',
 		'namalengkap' => 'Nama lengkap',
 		'namapanggilan' => 'Nama panggilan',
-		'sma' => 'SMA asal',
-		'kotaasal' => 'Kota asal',
-		'provinsiasal' => 'Provinsi asal',
-		'line' => 'LINE',
-		'twitter' => 'Twitter',
-		'facebook' => 'Facebook'
+		//'sma' => 'SMA asal',
+		//'kotaasal' => 'Kota asal',
+		//'provinsiasal' => 'Provinsi asal',
+		//'line' => 'LINE',
+		//'twitter' => 'Twitter',
+		//'facebook' => 'Facebook'
 	];
 }
 
