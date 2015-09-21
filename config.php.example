@@ -7,6 +7,8 @@ define('DB_NAME', 'webstei2015');
 
 define('ROOT_URL', '');
 
-//define('REGCODE', 'stei2015');
+define('DATA_DIR', getenv('OPENSHIFT_DATA_DIR')); // __DIR__.'/data/'
+
+define('REGCODE', 'stei2015');
 
 ?>

@@ -3,6 +3,7 @@
 require_once(__DIR__.'/../../include/http.php');
 require_once(__DIR__.'/../../include/auth.php');
 require_once(__DIR__.'/../../include/upload.php');
+require_once(__DIR__.'/../../config.php');
 
 ensureLogin();
 
@@ -26,7 +27,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){ //proses upload
 	}
 }
 
-$hasPicture = file_exists(__DIR__.'/../../data/profilepictures/'.$nim);
+$hasPicture = file_exists(DATA_DIR.'data/profilepictures/'.$nim);
 
 include(__DIR__.'/../../views/studentdata/editprofilepicture.php'); //tampilkan page upload profile picture
 

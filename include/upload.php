@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__.'/../config.php');
+
 function filter_filename($fileName){
     return preg_replace('/[^(a-zA-Z0-9_\(\)\[\]\-.,)]/','',$fileName);
 }
@@ -87,7 +89,7 @@ function upload_pp($fileid, $targetname, $maxsize = 1024000){
 	   	}
 
 	    $fileName = filter_filename($targetname);
-	    $destination_dir = __DIR__.'/../data/profilepictures';
+	    $destination_dir = DATA_DIR.'profilepictures';
 
 	    if(file_exists($destination_dir.'/'.$fileName)){
 		   	unlink($destination_dir.'/'.$fileName);

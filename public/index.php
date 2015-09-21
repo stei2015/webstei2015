@@ -3,6 +3,7 @@
 require_once(__DIR__.'/../include/http.php');
 require_once(__DIR__.'/../include/auth.php');
 require_once(__DIR__.'/../include/database.php');
+require_once(__DIR__.'/../config.php');
 
 ensureLogin();
 
@@ -29,7 +30,7 @@ if($numRows > 0){
 //jika blm upload foto, redirect ke page utk upload foto
 
 $nim = filter_var($_SESSION['id'], FILTER_SANITIZE_NUMBER_INT);
-if(!file_exists(__DIR__.'/../data/profilepictures/'.$nim)) redirect('studentdata/editprofilepicture.php');
+if(!file_exists(DATA_DIR.'profilepictures/'.$nim)) redirect('studentdata/editprofilepicture.php');
 
 redirect('forum');
 
