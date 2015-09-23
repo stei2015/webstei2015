@@ -1,22 +1,33 @@
 # Web STEI 2015
 
-## How to Deploy
+## Deploying to Openshift
 
-1. Copy `config.php.example` to `config.php`
-2. Edit `config.php`, change settings as needed
-3. Copy `.htaccess.example` to `.htaccess`, place in server's document root
-4. Edit `.htaccess` as needed to redirect to `/webstei2015/public` or wherever the public directory is
-5. Open phpmyadmin, import `webstei2015.sql` to the current database
-6. Open the website, register an account
-7. Using phpmyadmin, open the `users` table, change the `type` of your account to `admin`
-8. Don't forget to set write permissions to the `data` directory and its child directories
+### Preparations
+
+1. Install rhc and run `rhc setup`
+2. Navigate to the project directory
+3. Run `rhc show-app web`, note the git repository address
+4. Run `git remote add openshift <GIT-REPOSITORY-ADDRESS>`
+
+### Deploy Files using Git
+
+1. Make sure all local changes are committed to master, then run `git push openshift master`
+2. Run `rhc ssh web`
+3. Run `cd app-root/repo` in the ssh window
+4. Run `cp config.php.example config.php` and change settings as needed
+
+### Copy Existing User Data
+
+1. Open phpmyadmin from the Openshift web dashboard
+2. Create a new database named `webstei2015`
+3. Import empty database structure `webstei2015.sql` or other phpmyadmin backup sql file.
+4. Run `rhc ssh web`, upload existing data folder to `app-root/data`
 
 ## TODO
 
 - Forum
 - Moderator
 - Chat
-- Data search
 - Profile page
 - File + image sharing
 - Birthday notification

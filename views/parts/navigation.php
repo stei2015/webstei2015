@@ -11,7 +11,7 @@
         <li class="pull-left">
           <a class="user-display" href="<?php echo ROOT_URL; ?>/studentdata/profile.php">
             <?php echo htmlspecialchars($_SESSION['username']); ?>
-            <img class="profile-picture" src="<?php echo ROOT_URL.'/profilepicture.php?id='.filter_var($_SESSION['id'], FILTER_SANITIZE_NUMBER_INT); ?>">
+            <div class="profile-picture" style="background: url('<?php echo ROOT_URL.'/profilepicture.php?id='.filter_var($_SESSION['id'], FILTER_SANITIZE_NUMBER_INT); ?>') repeat scroll center center / cover #aaa;"></div>
           </a>
         </li>
       </ul>

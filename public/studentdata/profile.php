@@ -10,7 +10,7 @@ if(isset($_GET['nim'])) $nim = $_GET['nim']; else $nim = $_SESSION['id'];
 $nim = filter_var($nim, FILTER_SANITIZE_NUMBER_INT);
 
 $profileEditable = false;
-if($nim == $_SESSION['id']) $profileEditable = true;
+if($nim == $_SESSION['id'] || $_SESSION['type'] == 'admin') $profileEditable = true;
 
 $stmt = $dbConnection->prepare("SELECT
 								namalengkap,

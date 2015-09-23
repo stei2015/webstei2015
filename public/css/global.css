@@ -72,10 +72,17 @@ body {
   height: 45px;
 }
 
+.navbar .user-display {
+  padding-right: 60px;
+}
+
 .navbar .profile-picture {
   width:45px;
   height:45px;
-  margin: -19px -15px -19px 10px;
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 
@@ -146,10 +153,6 @@ body {
 }
 
 @media (min-width: 768px){
-
-  .navbar .profile-picture {
-    margin: -19px -15px -15px 10px;
-  }
 
   .navbar-header.rightmost {
     margin-right: -15px;
