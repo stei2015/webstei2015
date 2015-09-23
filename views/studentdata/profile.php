@@ -27,16 +27,22 @@
 				</div>
 
 				<div class="row">
-					<div class="col-md-3">
+					<div class="col-sm-3">
 						<div style="background: url('<?php echo ROOT_URL.'/profilepicture.php?id='.$nim; ?>') repeat scroll center center / cover #aaa; padding-bottom:100%;"></div>
 					</div>
-					<div class="col-md-9">
+					<div class="col-sm-9">
 						<h2><?php echo htmlspecialchars($studentData[0]['namalengkap']); ?></h2>
+						<hr>
+
+						<span class="field-header">Nama panggilan</span>
+						<p><?php echo htmlspecialchars($studentData[0]['namapanggilan']); ?></p>
+
+						<span class="field-header">NIM</span>
+						<p><?php echo htmlspecialchars($nim); ?></p>
+
+						<br>
 					</div>
 				</div>
-
-
-
 
 			<?php
 		} else {

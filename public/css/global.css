@@ -41,6 +41,13 @@ body {
 	background-color: #eee;
 }
 
+.field-header {
+  font-weight: 500;
+  color: #555;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
 .page-header {
   margin-top: 23px;
 }
