@@ -76,6 +76,8 @@
 
     }).done(function(result){
 
+      //alert(result);
+
       if(result !== 'available'){
         $('#usernameFormGroup').addClass('has-error');
         usernameOk = false;

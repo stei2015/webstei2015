@@ -13,7 +13,7 @@ if(isLoggedIn() || ($_SERVER['REQUEST_METHOD'] == 'POST' && $regCodeValid && reg
 
 } else {
 
-	if(!$regCodeValid) $authErrors = 'Kode registrasi tidak valid';
+	if($_SERVER['REQUEST_METHOD'] == 'POST' && !$regCodeValid) $authErrors = 'Kode registrasi tidak valid';
 
 	//tampilkan page registrasi
 	//jika registrasi gagal, $authMessages atau $authErrors dapat ditampilkan

@@ -2,6 +2,7 @@
 
 require_once(__DIR__.'/http.php');
 require_once(__DIR__.'/database.php');
+require_once(__DIR__.'/../models/user.php');
 
 // checking for minimum PHP version
 if(version_compare(PHP_VERSION, '5.3.7', '<')){
@@ -51,36 +52,44 @@ function login($username, $password){
 		return false;
             
     } else {
-
         
         //get user info 
-        $stmt = $dbConnection->prepare("SELECT id, username, password, type FROM users WHERE id = ? OR username = ?");
-        $stmt->bind_param('ss', $username, $username);
-        $stmt->execute();
-        $stmt->store_result();
-        $result = [];
-        $stmt->bind_result($result['id'], $result['username'], $result['password'], $result['type']);
-        $users = getResultArray($result, $stmt);
-        $numRows = $stmt->num_rows;
-        $stmt->close();
+
+        $userInfo = getUsers([
+            'role' => 'user',
+            'columns' => ['id', 'username', 'password', 'type'],
+            'search' => $username,
+            'searchBy' => 'username',
+            'limit' => 1
+        ]);
+
+        if(count($userInfo) != 1){
+            $userInfo = getUsers([
+                'role' => 'user',
+                'columns' => ['id', 'username', 'password', 'type'],
+                'search' => $username,
+                'searchBy' => 'id',
+                'limit' => 1
+            ]);
+        }
         
-        if($numRows == 1){
+        if(count($userInfo) == 1){
 
             //using PHP 5.5's password_verify() function to check if the provided password is correct
-            if(password_verify($password, $users[0]['password'])){
+            if(password_verify($password, $userInfo[0]['password'])){
 
                 //write user data into PHP session
-                $_SESSION['id'] = $users[0]['id'];
-                $_SESSION['username'] = $users[0]['username'];
-                $_SESSION['type'] = $users[0]['type'];
+                $_SESSION['id'] = $userInfo[0]['id'];
+                $_SESSION['username'] = $userInfo[0]['username'];
+                $_SESSION['type'] = $userInfo[0]['type'];
 
                 //bump lastlogin
                 $stmt = $dbConnection->prepare("UPDATE users SET lastlogin = ? WHERE id = ?");
-                $stmt->bind_param('si', date('Y-m-d H:i:s'), $users[0]['id']);
+                $stmt->bind_param('si', date('Y-m-d H:i:s'), $userInfo[0]['id']);
                 $stmt->execute();
                 $stmt->close();
                 
-                $authMessages = 'Selamat datang, '.$users[0]['username'].'!';
+                $authMessages = 'Selamat datang, '.$userInfo[0]['username'].'!';
                 return true;
 
             } else {
@@ -127,15 +136,21 @@ function register($nim, $username, $password, $type='user'){
         return false;
     } else {
 
-        $stmt = $dbConnection->prepare("SELECT COUNT(*) as count FROM users WHERE username = ? OR id = ?");
-        $stmt->bind_param('si', $username, $nim);
-        $stmt->execute();
-        $stmt->store_result();
-        $stmt->bind_result($count);
-        $stmt->fetch();
-        $stmt->close();
+        $count1 = countUsers([
+            'role' => 'user',
+            'search' => $username,
+            'searchBy' => 'username',
+            'limit' => 1
+        ]);
 
-        if($count > 0){
+        $count2 = countUsers([
+            'role' => 'user',
+            'search' => $nim,
+            'searchBy' => 'id',
+            'limit' => 1
+        ]);
+
+        if($count1 != 0 || $count2 != 0){
             $authErrors = 'Username atau NIM sudah ada';
             return false;
         }

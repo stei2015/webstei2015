@@ -10,7 +10,7 @@
 <div class="page-container">
 	
 	<?php
-		if($numRows > 0){
+		if(count($studentData) > 0){
 			?>
 
 				<div class="page-header">
@@ -34,12 +34,15 @@
 						<h2><?php echo htmlspecialchars($studentData[0]['namalengkap']); ?></h2>
 						<hr>
 
-						<span class="field-header">Nama panggilan</span>
-						<p><?php echo htmlspecialchars($studentData[0]['namapanggilan']); ?></p>
-
-						<span class="field-header">NIM</span>
-						<p><?php echo htmlspecialchars($nim); ?></p>
-
+						<table class="basic-table">
+							<?php
+								foreach($studentData[0] as $key => $val){
+									echo '<tr><th><span >'.getUserColumnDescription($key).'</span></th>';
+									echo '<td>'.htmlspecialchars($val).'</td></tr>';
+								}
+							?>
+						</table>
+						
 						<br>
 					</div>
 				</div>

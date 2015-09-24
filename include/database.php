@@ -2,6 +2,8 @@
 
 require_once(__DIR__.'/../config.php');
 
+$validSearchOperators = ['=', 'LIKE', '>=', '>', '<', '<=', '<>', '!=', 'IS', '<=>', 'IS NOT', 'NOT LIKE'];
+
 $dbConnection = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
 if($dbConnection->connect_errno){
@@ -28,5 +30,17 @@ function getResultArray(&$boundArray, &$stmt){
 
 	return $result;
 }
+
+/**
+ * Returns a character representing the bind_param type of a variable
+ *
+ */
+function getParameterType($parameter){
+	if(is_string($parameter)) return 's';
+    if(is_int($parameter)) return 'i';
+    if(is_float($parameter)) return 'd';
+    return 'b';
+}
+
 
 ?>

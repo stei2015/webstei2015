@@ -85,6 +85,11 @@ body {
   right: 0;
 }
 
+.basic-table td, .basic-table th {
+  padding-right: 20px;
+  padding-bottom: 10px;
+}
+
 
 .sidebar {
   position: fixed;

@@ -39,7 +39,7 @@
   		
 		  <?php
 
-		  		if($numRows > 0){
+		  		if(count($data) > 0){
 
 		  			?>
 		  				<thead>
@@ -53,15 +53,15 @@
 				  		</thead>
 				  		<tbody>
 		  			<?php
-
+		  				
 						foreach($data as $row){
 							?>
-								<tr <?php if($_SESSION['type'] == 'admin') echo 'onclick="document.location=\''.ROOT_URL.'/studentdata/profile.php?nim='.filter_var($row['nim']).'\';"'; ?> >
+								<tr onclick="document.location='<?php echo ROOT_URL; ?>/studentdata/profile.php?nim=<?php echo filter_var($row['id']); ?>';" >
 									<?php
-				  					foreach($viewColumns as $key => $val){
-				  						echo '<td>'.htmlspecialchars($row[$key]).'</td>';
-				  					}
-				  				?>
+					  					foreach($viewColumns as $key => $val){
+					  						echo '<td>'.htmlspecialchars($row[$key]).'</td>';
+					  					}
+					  				?>
 								</tr>
 							<?php
 						}
