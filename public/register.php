@@ -17,7 +17,7 @@ if(isLoggedIn() || ($_SERVER['REQUEST_METHOD'] == 'POST' && $regCodeValid && reg
 
 	//tampilkan page registrasi
 	//jika registrasi gagal, $authMessages atau $authErrors dapat ditampilkan
-	include(__DIR__.'/../views/register.php');
+	require(__DIR__.'/../views/register.php');
 }
 
 ?>

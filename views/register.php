@@ -1,6 +1,6 @@
 <?php 
   $pageTitle = 'Register';
-  include(__DIR__.'/parts/top.php');
+  require(__DIR__.'/parts/top.php');
 ?>
 
 <div class="container">
@@ -119,4 +119,4 @@
 
 </script>
 
-<?php include(__DIR__.'/parts/bottom.php'); ?>
+<?php require(__DIR__.'/parts/bottom.php'); ?>

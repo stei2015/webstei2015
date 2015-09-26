@@ -235,3 +235,159 @@ function countUsers($parameters){
 
 	return $countResult;
 }
+
+
+/**
+ * Updates user data, returns number of affected rows on success and false otherwise
+ *
+ * @param $parameters
+ * 
+ * values: associative array containing columns and values to be updated
+ * search: value to be searched, if not specified then will return all rows - required
+ * searchBy: column to be searched, if not specified or invalid then will return all rows
+ * searchOperator: operator to be used for searching, defaults to =
+ * limit: maximum number of rows to be updated
+ *
+ * useStudentDataTable: if true, update the student data table, otherwise update users table
+ *
+ */
+function updateUsers($parameters){
+
+	global $validSearchOperators;
+	global $userColumnDescription;
+	global $dbConnection;
+
+	if(array_key_exists('useStudentDataTable', $parameters) && $parameters['useStudentDataTable']){
+		$sql = "UPDATE studentdata SET ";
+		$useSDT = true;
+	} else {
+		$sql = "UPDATE users SET ";
+		$useSDT = false;
+	}
+
+	$boundInput = ['']; //reserve $boundInput[0] for the string denoting variable types
+
+	$separator = '';
+	if(!array_key_exists('values', $parameters)) $parameters['values'] = [];
+	foreach($parameters['values'] as $key => $val){
+		if(array_key_exists($key, $userColumnDescription)){
+			$sql .= $separator.$key.' = ?';
+			$separator = ', ';
+
+			$boundInput[] = &$parameters['values'][$key];
+			$boundInput[0] .= getParameterType($parameters['values'][$key]);
+		}
+	}
+
+	if(array_key_exists('search', $parameters) && isset($parameters['search']) && array_key_exists('searchBy', $parameters) && isset($parameters['searchBy'])){
+		
+		if(($useSDT && $parameters['searchBy'] == 'nim') || in_array($parameters['searchBy'], getUserSearchableColumns('admin'))){
+
+			if(array_key_exists('searchOperator', $parameters)) $parameters['searchOperator'] = strtoupper($parameters['searchOperator']);
+			if(!array_key_exists('searchOperator', $parameters) || !in_array($parameters['searchOperator'], $validSearchOperators)) $parameters['searchOperator'] = '=';
+
+			$sql .= ' WHERE '.$parameters['searchBy'].' '.$parameters['searchOperator'].' ?';
+			$boundInput[] = &$parameters['search'];
+			$boundInput[0] .= getParameterType($parameters['search']);
+		} else {
+			return false; //fail-safe, if no where criteria specified dont update
+		}
+	} else {
+		return false;
+	}
+
+	if(array_key_exists('limit', $parameters) && is_int($parameters['limit']) && $parameters['limit'] > 0){
+		$sql .= ' LIMIT '.$parameters['limit'];
+	}
+
+	$stmt = $dbConnection->prepare($sql);
+
+	if(array_key_exists('debug', $parameters) && $parameters['debug']){
+		echo "stmt: ";
+		var_dump($stmt);
+		echo "sql: ";
+		var_dump($sql);
+		echo "boundInput: ";
+		var_dump($boundInput);
+	}
+
+	if(!$stmt) return false;
+
+	if(count($boundInput) > 1) call_user_func_array([$stmt, "bind_param"], $boundInput);
+	$stmt->execute();
+	$affectedRows = $stmt->affected_rows;
+	$stmt->close();
+
+	return $affectedRows;
+}
+
+
+/**
+ * Inserts user data, returns number of affected rows on success and false otherwise
+ *
+ * @param $parameters
+ * 
+ * values: associative array containing columns and values to be updated
+ *
+ * useStudentDataTable: if true, insert to the student data table, otherwise insert to users table
+ *
+ */
+function insertUsers($parameters){
+
+	global $userColumnDescription;
+	global $dbConnection;
+
+	if(array_key_exists('useStudentDataTable', $parameters) && $parameters['useStudentDataTable']){
+		$sql = "INSERT INTO studentdata (";
+		$useSDT = true;
+	} else {
+		$sql = "INSERT INTO users (";
+		$useSDT = false;
+	}
+
+	$boundInput = ['']; //reserve $boundInput[0] for the string denoting variable types
+
+	$counter = 0;
+	$separator = '';
+	if(!array_key_exists('values', $parameters)) $parameters['values'] = [];
+	foreach($parameters['values'] as $key => $val){
+		if(array_key_exists($key, $userColumnDescription)){
+			$sql .= $separator.$key;
+			$separator = ', ';
+			$counter++;
+
+			$boundInput[] = &$parameters['values'][$key];
+			$boundInput[0] .= getParameterType($parameters['values'][$key]);
+		}
+	}
+
+	$sql .= ') VALUES (';
+
+	$separator = '';
+	for($i = 0; $i<$counter; $i++){
+		$sql .= $separator.'?';
+		$separator = ', ';
+	}
+
+	$sql .= ')';
+
+	$stmt = $dbConnection->prepare($sql);
+
+	if(array_key_exists('debug', $parameters) && $parameters['debug']){
+		echo "stmt: ";
+		var_dump($stmt);
+		echo "sql: ";
+		var_dump($sql);
+		echo "boundInput: ";
+		var_dump($boundInput);
+	}
+
+	if(!$stmt) return false;
+
+	if(count($boundInput) > 1) call_user_func_array([$stmt, "bind_param"], $boundInput);
+	$stmt->execute();
+	$affectedRows = $stmt->affected_rows;
+	$stmt->close();
+
+	return $affectedRows;
+}

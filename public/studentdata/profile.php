@@ -19,6 +19,10 @@ $studentData = getUsers([
 	'limit' => 1
 ]);
 
-include(__DIR__.'/../../views/studentdata/profile.php');
+if($studentData == false){
+	httpError(500, 'Gagal mengakses database');
+}
+
+require(__DIR__.'/../../views/studentdata/profile.php');
 
 ?>

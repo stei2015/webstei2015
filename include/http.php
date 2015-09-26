@@ -15,4 +15,10 @@ function redirect($route, $relativeToRootUrl = true){
 	die(); //supaya kode dibawah redirect tidak dijalankan lagi
 }
 
+function httpError($status, $description = ''){
+	http_response_code($status);
+	@include(__DIR__.'/../views/error.php');
+	die();
+}
+
 ?>

@@ -17,6 +17,10 @@ $count = countUsers([
 	'useStudentDataTable' => true,
 ]);
 
+if($count == false){
+	httpError(500, 'Gagal mengakses database');
+}
+
 if($count < 1) redirect('studentdata/edit.php');
 
 //jika blm upload foto, redirect ke page utk upload foto

@@ -1,9 +1,9 @@
 <?php 
   $pageTitle = 'Profil';
-  include(__DIR__.'/../parts/top.php');
+  require(__DIR__.'/../parts/top.php');
 
   $activeSidebarSection = 'data';
-  include(__DIR__.'/../parts/navigation.php');
+  require(__DIR__.'/../parts/navigation.php');
 
 ?>
 
@@ -61,7 +61,7 @@
 </div>
 
 
-<?php include(__DIR__.'/../parts/bottom.php'); ?>
+<?php require(__DIR__.'/../parts/bottom.php'); ?>
 
 
 

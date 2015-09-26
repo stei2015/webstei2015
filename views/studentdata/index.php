@@ -1,9 +1,9 @@
 <?php 
   $pageTitle = 'Data Mahasiswa';
-  include(__DIR__.'/../parts/top.php');
+  require(__DIR__.'/../parts/top.php');
 
   $activeSidebarSection = 'data';
-  include(__DIR__.'/../parts/navigation.php');
+  require(__DIR__.'/../parts/navigation.php');
 
 ?>
 
@@ -24,7 +24,7 @@
 			<select name="by" class="form-control">
 				<?php
 					if(isset($_GET['by'])) $selectedKey = $_GET['by']; else $selectedKey = 'namalengkap';
-					foreach($viewColumns as $key => $val){
+					foreach($searchColumns as $key => $val){
 						if($key == $selectedKey) $selected = 'selected'; else $selected = '';
 						echo '<option value="'.$key.'" '.$selected.'>'.$val.'</option>';
 					}
@@ -79,7 +79,7 @@
 </div>
 
 
-<?php include(__DIR__.'/../parts/bottom.php'); ?>
+<?php require(__DIR__.'/../parts/bottom.php'); ?>
 
 
 

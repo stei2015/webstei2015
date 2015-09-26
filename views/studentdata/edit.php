@@ -1,6 +1,6 @@
 <?php 
   $pageTitle = 'Data Diri';
-  include(__DIR__.'/../parts/top.php');
+  require(__DIR__.'/../parts/top.php');
 ?>
 
 <div class="container">
@@ -26,7 +26,7 @@
     </div>
 
     <div class="form-group">
-      <label for="noreg">Nomor registrasi <span class="text-muted glyphicon glyphicon-lock"></span></label>
+      <label for="noreg">Nomor registrasi (dapat dilihat di KSM)<span class="text-muted glyphicon glyphicon-lock"></span></label>
       <input type="text" name="noreg" class="form-control" value="<?php if(count($oldData)>0) echo htmlspecialchars($oldData[0]['noreg']); ?>" required>
     </div>
 
@@ -203,4 +203,4 @@
   };
 </script>
 
-<?php include(__DIR__.'/../parts/bottom.php'); ?>
+<?php require(__DIR__.'/../parts/bottom.php'); ?>

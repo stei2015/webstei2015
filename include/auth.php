@@ -1,7 +1,6 @@
 <?php
 
 require_once(__DIR__.'/http.php');
-require_once(__DIR__.'/database.php');
 require_once(__DIR__.'/../models/user.php');
 
 // checking for minimum PHP version
@@ -84,10 +83,15 @@ function login($username, $password){
                 $_SESSION['type'] = $userInfo[0]['type'];
 
                 //bump lastlogin
-                $stmt = $dbConnection->prepare("UPDATE users SET lastlogin = ? WHERE id = ?");
-                $stmt->bind_param('si', date('Y-m-d H:i:s'), $userInfo[0]['id']);
-                $stmt->execute();
-                $stmt->close();
+                $affectedRows = updateUsers([
+                    'values' => ['lastlogin' => date('Y-m-d H:i:s')],
+                    'search' => $userInfo[0]['id'],
+                    'searchBy' => 'id'
+                ]);
+
+                if(!$affectedRows){
+                    $authErrors = 'Gagal menyimpan waktu login terakhir di database';
+                }
                 
                 $authMessages = 'Selamat datang, '.$userInfo[0]['username'].'!';
                 return true;
@@ -155,10 +159,19 @@ function register($nim, $username, $password, $type='user'){
             return false;
         }
 
-        $stmt = $dbConnection->prepare("INSERT INTO users (id, username, password, type) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param('isss', $nim, $username, password_hash($password, PASSWORD_DEFAULT), $type);
-        $stmt->execute();
-        $stmt->close();
+        $affectedRows = insertUsers([
+            'values' => [
+                'id' => $nim,
+                'username' => $username,
+                'password' => password_hash($password, PASSWORD_DEFAULT),
+                'type' => $type
+            ],
+        ]);
+
+        if(!$affectedRows){
+            $authMessages = 'Gagal menyimpan data di database';
+            return false;
+        }
 
         $authMessages = 'Registrasi berhasil';
         return true;

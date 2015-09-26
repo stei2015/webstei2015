@@ -29,6 +29,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){ //proses upload
 
 $hasPicture = file_exists(DATA_DIR.'profilepictures/'.$nim);
 
-include(__DIR__.'/../../views/studentdata/editprofilepicture.php'); //tampilkan page upload profile picture
+require(__DIR__.'/../../views/studentdata/editprofilepicture.php'); //tampilkan page upload profile picture
 
 ?>

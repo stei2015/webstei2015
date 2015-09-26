@@ -1,9 +1,9 @@
 <?php 
   $pageTitle = 'Forum';
-  include(__DIR__.'/../parts/top.php');
+  require(__DIR__.'/../parts/top.php');
 
   $activeSidebarSection = 'forum';
-  include(__DIR__.'/../parts/navigation.php');
+  require(__DIR__.'/../parts/navigation.php');
 ?>
 
 <div class="page-container-full">
@@ -22,4 +22,4 @@
 
 </div>
 
-<?php include(__DIR__.'/../parts/bottom.php'); ?>
+<?php require(__DIR__.'/../parts/bottom.php'); ?>

@@ -19,9 +19,14 @@ if(isset($_GET['search']) && isset($_GET['by'])){
 }
 
 $viewColumns = getUserColumnDescription($queryParams['columns']);
+$searchColumns = getUserColumnDescription(getUserSearchableColumns($_SESSION['type']));
 
 $data = getUsers($queryParams);
 
-include(__DIR__.'/../../views/studentdata/index.php');
+if($data == false){
+	httpError(500, 'Gagal mengakses database');
+}
+
+require(__DIR__.'/../../views/studentdata/index.php');
 
 ?>
