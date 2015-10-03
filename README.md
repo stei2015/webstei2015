@@ -12,6 +12,7 @@
 ### Deploy Files using Git
 
 1. Make sure all local changes are committed to master, then run `git push openshift master`
+OR make sure all local changes are committed to dev, then run `git push openshift dev:master`
 2. Run `rhc ssh web`
 3. Run `cd app-root/repo` in the ssh window
 4. Run `cp config.php.example config.php` and change settings as needed
@@ -25,6 +26,7 @@
 
 ## TODO
 
+- Password reset
 - Forum
 - Moderator
 - Chat

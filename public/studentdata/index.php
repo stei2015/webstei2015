@@ -13,7 +13,7 @@ $queryParams = [
 ];
 
 if(isset($_GET['search']) && isset($_GET['by'])){
-	$queryParams['search'] = $_GET['search'];
+	$queryParams['search'] = '%'.$_GET['search'].'%';
 	$queryParams['searchBy'] = $_GET['by'];
 	$queryParams['searchOperator'] = 'LIKE';
 }
