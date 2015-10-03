@@ -25,7 +25,7 @@ $oldData = getUsers([
 	'limit' => 1
 ]);
 
-if($oldData == false){
+if($oldData === false){
 	httpError(500, 'Gagal mengakses database');
 }
 

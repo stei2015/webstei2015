@@ -19,7 +19,7 @@ $studentData = getUsers([
 	'limit' => 1
 ]);
 
-if($studentData == false){
+if($studentData === false){
 	httpError(500, 'Gagal mengakses database');
 }
 

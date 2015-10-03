@@ -23,7 +23,7 @@ $searchColumns = getUserColumnDescription(getUserSearchableColumns($_SESSION['ty
 
 $data = getUsers($queryParams);
 
-if($data == false){
+if($data === false){
 	httpError(500, 'Gagal mengakses database');
 }
 

@@ -17,7 +17,7 @@ $count = countUsers([
 	'useStudentDataTable' => true,
 ]);
 
-if($count == false){
+if($count === false){
 	httpError(500, 'Gagal mengakses database');
 }
 
