@@ -37,6 +37,43 @@
 	padding: 10px 40px 20px 40px;
 }
 
+.callout-list {
+  cursor: pointer;
+}
+
+.callout-list-item {
+  display:block;
+  color: #222;
+  text-decoration: none;
+  background-color: #fff;
+  border-left: solid 5px #008cba;
+  padding: 16px 16px 10px 16px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+
+.callout-list.hover > .callout-list-item:hover,
+.callout-list.hover > .callout-list-item:focus {
+  border-left: solid 5px #33bfed;
+  color: #222;
+  text-decoration: none;
+}
+
+.callout-list.hover > .callout-list-item:active {
+  border-left: solid 5px #4dd9ff;
+  color: #222;
+  text-decoration: none;
+}
+
+
+.callout-list-item-header {
+  font-size: 18px;
+  font-weight: 700;
+  display: block;
+}
+
 body {
 	background-color: #eee;
 }

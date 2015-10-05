@@ -12,12 +12,21 @@
   	<div style="color: #fff; font-size: 28px; font-weight: 700; margin: 100px 20px 20px 20px;">Forum STEI ITB 2015</div>
   </div>
 
-  <div style="margin:20px;">
-  	<h1>Coming soon!</h1>
+  <div class="callout-list hover" style="margin-top:20px;">
 
-  	<a href="<?php echo ROOT_URL; ?>/studentdata/edit.php">Edit data diri</a>  
-	<br>
-	<a href="<?php echo ROOT_URL; ?>/studentdata/editprofilepicture.php">Edit foto profil</a>
+    <?php
+      foreach($data as $forum){
+        ?>
+
+          <a class="callout-list-item" href="<?php echo ROOT_URL;?>/forum/threads.php?forum=<?php echo filter_var($forum['id'], FILTER_SANITIZE_NUMBER_INT); ?>">
+            <div class="callout-list-item-header"><?php echo htmlspecialchars($forum['name']); ?></div>
+            <p><?php echo htmlspecialchars($forum['description']); ?></p>
+          </a>
+
+        <?php
+      }
+    ?>
+  	
   </div>
 
 </div>
