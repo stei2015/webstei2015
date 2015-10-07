@@ -129,10 +129,10 @@ function getUsers($parameters){
 	}
 
 	if(array_key_exists('sortBy', $parameters)){
-		if(array_key_exists('searchOrder', $parameters)) $parameters['searchOrder'] = strtoupper($parameters['searchOrder']);
-		if(!array_key_exists('searchOrder', $parameters) || ($parameters['searchOrder'] != 'ASC' && $parameters['searchOrder'] != 'DESC')) $parameters['searchOrder'] = 'ASC';
+		if(array_key_exists('sortOrder', $parameters)) $parameters['sortOrder'] = strtoupper($parameters['sortOrder']);
+		if(!array_key_exists('sortOrder', $parameters) || ($parameters['sortOrder'] != 'ASC' && $parameters['sortOrder'] != 'DESC')) $parameters['sortOrder'] = 'ASC';
 
-		$sql .= ' ORDER BY '.$parameters['sortBy'].' '.$parameters['searchOrder'];
+		$sql .= ' ORDER BY '.$parameters['sortBy'].' '.$parameters['sortOrder'];
 	}
 
 	if(array_key_exists('limit', $parameters) && is_int($parameters['limit']) && $parameters['limit'] > 0){

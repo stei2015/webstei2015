@@ -11,6 +11,9 @@ if(isset($_GET['thread'])) $thread = $_GET['thread'];
 else if(isset($_POST['thread'])) $thread = $_POST['thread'];
 else redirect('forum');
 
+$changeStickyReadonly = $_SESSION['type'] == 'admin' ? true : false;
+
+
 if($thread != 'new'){
 
 	$thread = filter_var($thread, FILTER_SANITIZE_NUMBER_INT);
@@ -34,38 +37,59 @@ if($thread != 'new'){
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	//TODO: add readonly forums so only admins can post to those
-	//TODO: add admin badge to all username displays
 	//TODO: filter html content
 
-	//TODO: isset($_POST variables) !!!!!!!!!!!!!!!, sticky and readonly not working if not selected
-	//content, title etc if not present then show 500 or some other error
+	$sticky = isset($_POST['sticky']);
+	$readonly = isset($_POST['readonly']);
 
 	if($thread === 'new'){ //insert
 
+		$forum = filter_var($_POST['forum'], FILTER_SANITIZE_NUMBER_INT);
+
+		if(!isset($_POST['title']) || !isset($_POST['content']) || !isset($_POST['forum'])){
+			httpError(500, 'Judul, forum atau isi thread belum diisi');
+		}
+
+		$values = [
+			'forum' 	=> $forum,
+			'title' 	=> $_POST['title'],
+			'author'	=> $_SESSION['id'],
+			'lastpost'	=> date('Y-m-d H:i:s'),
+			'content'	=> $_POST['content']
+		];
+
+		if($changeStickyReadonly){
+			$values['sticky'] = $sticky;
+			$values['readonly'] = $readonly;
+		}
+
 		$insertUpdateResult = insertThreads([
-			'values' => [
-				'forum' 	=> filter_var($_POST['forum'], FILTER_SANITIZE_NUMBER_INT),
-				'title' 	=> $_POST['forum'],
-				'author'	=> $_SESSION['id'],
-				'lastpost'	=> date('Y-m-d H:i:s'),
-				'readonly'	=> $_POST['readonly'],
-				'sticky'	=> $_POST['sticky'],
-				'content'	=> $_POST['content']
-			]
+			'values' => $values
 		]);
 
 	} else { //update
 
+		$forum = filter_var($data[0]['forum'], FILTER_SANITIZE_NUMBER_INT);
+
+		if(!isset($_POST['title']) || !isset($_POST['content'])){
+			httpError(500, 'Judul atau isi thread belum diisi');
+		}
+
+		$values = [
+			'title' 	=> $_POST['title'],
+			'lastpost'	=> date('Y-m-d H:i:s'),
+			'content'	=> $_POST['content']
+		];
+
+		if($changeStickyReadonly){
+			$values['sticky'] = $sticky;
+			$values['readonly'] = $readonly;
+		}
+
 		$insertUpdateResult = updateThreads([
 			'search' => $thread,
 			'searchBy' => 'id',
-			'values' => [
-				'title' 	=> $_POST['forum'],
-				'lastpost'	=> date('Y-m-d H:i:s'),
-				'readonly'	=> $_POST['readonly'],
-				'sticky'	=> $_POST['sticky'],
-				'content'	=> $_POST['content']
-			]
+			'values' => $values
 		]);
 	}
 
@@ -73,19 +97,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		httpError(500, 'Gagal menulis data thread ke database');
 	}
 
-	//bump forum lastpost
-	updateForums([
-		'search' => $_POST['forum'],
-		'searchBy' => 'id',
-		'values' => ['lastpost' => date('Y-m-d H:i:s')]
-	]);
-
-	redirect('forum/threads.php?forum='.filter_var($_POST['forum'], FILTER_SANITIZE_NUMBER_INT));
+	redirect('forum/threads.php?forum='.$forum);
 
 } else {
 
 	if(isset($_GET['forum'])) $forum = $_GET['forum'];
-	else $forum = 1;
+	else if($thread == 'new') httpError(500, 'Parameter forum tidak ditemukan');
 
 	require(__DIR__.'/../../views/forum/thread.php');
 }

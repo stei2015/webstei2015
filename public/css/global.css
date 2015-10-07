@@ -42,6 +42,7 @@
 }
 
 .callout-list-item {
+  position: relative;
   display:block;
   color: #222;
   text-decoration: none;
@@ -53,6 +54,37 @@
   margin-right: 20px;
 }
 
+.callout-list-item-icons {
+  position: absolute;
+  display: block;
+  top: 10px;
+  right: 10px;
+}
+
+.admin-badge {
+  font-weight: bold;
+  color: #e23;
+}
+
+.forum-header-text {
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 100px 20px 20px 20px;
+  position: relative;
+}
+
+.btn-header {
+  position: absolute;
+  bottom: 5px;
+  right: 0;
+}
+.callout-list-item-icons .glyphicon-star {
+  color: orange;
+}
+.callout-list-item-icons .glyphicon-lock {
+  color: gray;
+}
 
 .callout-list.hover > .callout-list-item:hover,
 .callout-list.hover > .callout-list-item:focus {

@@ -2,6 +2,7 @@
 
 require_once(__DIR__.'/../../include/http.php');
 require_once(__DIR__.'/../../include/auth.php');
+require_once(__DIR__.'/../../include/time.php');
 require_once(__DIR__.'/../../models/thread.php');
 require_once(__DIR__.'/../../models/forum.php');
 
@@ -17,9 +18,7 @@ if(!$forum){
 $data = getThreads([
 	'role' 		=> $_SESSION['type'],
 	'search'	=> $forum,
-	'searchBy'	=> 'forum',
-	'sortBy'	=> 'lastpost',
-	'sortOrder'	=> 'desc'
+	'searchBy'	=> 'forum'
 ]);
 
 if($data === false){
@@ -31,6 +30,10 @@ $forumData = getForums([
 	'searchBy'	=> 'id',
 	'limit'		=> 1
 ]);
+
+if($forumData === false){
+	httpError(404, 'Forum tidak ditemukan');
+}
 
 require(__DIR__.'/../../views/forum/threads.php');
 

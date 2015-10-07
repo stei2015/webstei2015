@@ -87,7 +87,7 @@ function getThreads($parameters){
 	if(!array_key_exists('columns', $parameters)) $parameters['columns'] = getThreadViewableColumns($parameters['role']);
 	foreach($threadColumnDescription as $key => $val){
 		if(in_array($key, $parameters['columns'])){
-			$sql .= $separator.$key;
+			$sql .= $separator.'threads.'.$key;
 			$boundName = '_boundOutput'.$counter; //name of new variable
 			$counter++;
 			$$boundName = $key; //create new variable named with the value of boundName, assign the value of $key to it
@@ -96,22 +96,39 @@ function getThreads($parameters){
 		}
 	}
 
-	$sql .= " FROM threads";
+	//author username, type
+
+	$sql .= $separator.'users.username';
+	$boundName = '_boundOutput'.$counter; //name of new variable
+	$counter++;
+	$$boundName = 'users.username'; //create new variable named with the value of boundName, assign the value of $key to it
+	$boundOutput['authorusername'] = &$$boundName; //store the reference to the new variable in the boundOutput array
+
+	$sql .= $separator.'users.type';
+	$boundName = '_boundOutput'.$counter; //name of new variable
+	$counter++;
+	$$boundName = 'users.type'; //create new variable named with the value of boundName, assign the value of $key to it
+	$boundOutput['authortype'] = &$$boundName; //store the reference to the new variable in the boundOutput array
+
+
+	$sql .= " FROM threads LEFT JOIN users ON threads.author = users.id ";
 
 	if(array_key_exists('search', $parameters) && isset($parameters['search']) && array_key_exists('searchBy', $parameters) && isset($parameters['searchBy']) && in_array($parameters['searchBy'], getThreadSearchableColumns($parameters['role']))){	
 		if(array_key_exists('searchOperator', $parameters)) $parameters['searchOperator'] = strtoupper($parameters['searchOperator']);
 		if(!array_key_exists('searchOperator', $parameters) || !in_array($parameters['searchOperator'], $validSearchOperators)) $parameters['searchOperator'] = '=';
 
-		$sql .= ' WHERE '.$parameters['searchBy'].' '.$parameters['searchOperator'].' ?';
+		$sql .= ' WHERE threads.'.$parameters['searchBy'].' '.$parameters['searchOperator'].' ?';
 		$boundInput[] = &$parameters['search'];
 		$boundInput[0] .= getParameterType($parameters['search']);
 	}
 
 	if(array_key_exists('sortBy', $parameters)){
-		if(array_key_exists('searchOrder', $parameters)) $parameters['searchOrder'] = strtoupper($parameters['searchOrder']);
-		if(!array_key_exists('searchOrder', $parameters) || ($parameters['searchOrder'] != 'ASC' && $parameters['searchOrder'] != 'DESC')) $parameters['searchOrder'] = 'ASC';
+		if(array_key_exists('sortOrder', $parameters)) $parameters['sortOrder'] = strtoupper($parameters['sortOrder']);
+		if(!array_key_exists('sortOrder', $parameters) || ($parameters['sortOrder'] != 'ASC' && $parameters['sortOrder'] != 'DESC')) $parameters['sortOrder'] = 'ASC';
 
-		$sql .= ' ORDER BY '.$parameters['sortBy'].' '.$parameters['searchOrder'];
+		$sql .= ' ORDER BY threads.'.$parameters['sortBy'].' '.$parameters['sortOrder'];
+	} else {
+		$sql .= ' ORDER BY sticky DESC, lastpost DESC';
 	}
 
 	if(array_key_exists('limit', $parameters) && is_int($parameters['limit']) && $parameters['limit'] > 0){

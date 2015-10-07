@@ -37,7 +37,7 @@ function getResultArray(&$boundArray, &$stmt){
  */
 function getParameterType($parameter){
 	if(is_string($parameter)) return 's';
-    if(is_int($parameter)) return 'i';
+    if(is_int($parameter) || is_bool($parameter)) return 'i';
     if(is_float($parameter)) return 'd';
     return 'b';
 }

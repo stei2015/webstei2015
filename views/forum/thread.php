@@ -29,7 +29,7 @@
       </textarea>
     </div>
 
-     <?php if($_SESSION['type'] == 'admin'){ ?>
+     <?php if($changeStickyReadonly){ ?>
 
       <div class="checkbox">
         <label>
