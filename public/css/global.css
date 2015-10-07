@@ -121,6 +121,10 @@ body {
   margin-top: 23px;
 }
 
+.page-header > .thread-actions {
+  margin-left: 42px;
+}
+
 .table th {
   white-space: nowrap;
 }
@@ -294,6 +298,12 @@ body {
   .page-header > .form-inline {
     float:right;
     margin-top: -50px;
+  }
+
+  .page-header > .thread-actions {
+    float:right;
+    margin-top: -40px;
+    margin-left: 0;
   }
 
 }

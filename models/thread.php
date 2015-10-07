@@ -65,7 +65,7 @@ function getThreadViewableColumns($role = 'user'){
  * search: value to be searched, if not specified then will return all rows
  * searchBy: column to be searched, if not specified or invalid then will return all rows
  * searchOperator: operator to be used for searching, defaults to =
- * sortBy: column to search by, if not specified then will not sort
+ * sortBy: column to search by, if not specified then will will sort sticky DESC, posttime DESC
  * sortOrder: ASC/DESC, defaults to ASC
  * limit: maximum number of rows to be returned, if not specified then will not set a limit
  *

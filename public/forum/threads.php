@@ -12,27 +12,27 @@ ensureLogin();
 $forum = filter_var($_GET['forum'], FILTER_SANITIZE_NUMBER_INT);
 
 if(!$forum){
-	httpError(404, 'Data forum tidak ditemukan');
+  httpError(404, 'Data forum tidak ditemukan');
 }
 
 $data = getThreads([
-	'role' 		=> $_SESSION['type'],
-	'search'	=> $forum,
-	'searchBy'	=> 'forum'
+  'role'    => $_SESSION['type'],
+  'search'  => $forum,
+  'searchBy'  => 'forum'
 ]);
 
 if($data === false){
-	httpError(500, 'Gagal mengakses database');
+  httpError(500, 'Gagal mengakses database');
 }
 
 $forumData = getForums([
-	'search'	=> $forum,
-	'searchBy'	=> 'id',
-	'limit'		=> 1
+  'search'  => $forum,
+  'searchBy'  => 'id',
+  'limit'   => 1
 ]);
 
 if($forumData === false){
-	httpError(404, 'Forum tidak ditemukan');
+  httpError(404, 'Forum tidak ditemukan');
 }
 
 require(__DIR__.'/../../views/forum/threads.php');

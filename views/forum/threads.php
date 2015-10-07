@@ -10,6 +10,7 @@
 
   <div class="forum-header" style="overflow:hidden; background: url('<?php echo ROOT_URL; ?>/img/backgroundstei2015.jpg') repeat scroll center center / cover #ccc;">
   	<div class="forum-header-text">
+      <a href="<?php echo ROOT_URL.'/forum'; ?>"><span class="glyphicon glyphicon-chevron-left"></span></a>
       <?php echo htmlspecialchars($forumData[0]['name']); ?>
       <a href="<?php echo ROOT_URL.'/forum/thread.php?thread=new&forum='.filter_var($forumData[0]['id'], FILTER_SANITIZE_NUMBER_INT); ?>" class="btn btn-default btn-header btn-xs">Thread baru <span class="glyphicon glyphicon-plus"></span></a>
     </div>

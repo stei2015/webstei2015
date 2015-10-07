@@ -37,7 +37,6 @@ if($thread != 'new'){
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	//TODO: add readonly forums so only admins can post to those
-	//TODO: filter html content
 
 	$sticky = isset($_POST['sticky']);
 	$readonly = isset($_POST['readonly']);
