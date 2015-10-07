@@ -12,7 +12,7 @@
     <h1><?php echo ($thread == 'new' ? 'Thread Baru' : 'Edit Thread'); ?></h1>
   </div>
 
-  <form method="POST" action="">
+  <form method="POST">
 
     <input type="hidden" name="forum" value="<?php echo htmlspecialchars($forum); ?>">
     
@@ -20,8 +20,6 @@
       <label for="title" class="sr-only">Judul</label>
       <input type="text" name="title" class="form-control" required value="<?php if(isset($data)) echo htmlspecialchars($data[0]['title']); ?>" placeholder="Judul Thread"/>
     </div>
-
-    <!-- TODO: filter HTML using HTMLPurifier -->
 
     <div class="form-group">
       <textarea id="contenteditor" name="content" rows="12">

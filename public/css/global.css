@@ -37,7 +37,7 @@
 	padding: 10px 40px 20px 40px;
 }
 
-.callout-list {
+.callout-list.hover .callout-list-item {
   cursor: pointer;
 }
 

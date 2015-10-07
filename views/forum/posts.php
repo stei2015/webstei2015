@@ -20,7 +20,7 @@
       <?php } ?>
 
       <?php if(!$threadData[0]['readonly']){ ?>
-        <a class="btn btn-xs btn-primary">Post baru <span class="glyphicon glyphicon-plus"></span></a>
+        <a class="btn btn-xs btn-primary" href="<?php echo ROOT_URL.'/forum/post.php?post=new&thread='.filter_var($threadData[0]['id'], FILTER_SANITIZE_NUMBER_INT); ?>">Post baru <span class="glyphicon glyphicon-plus"></span></a>
       <?php } ?>
     </div>
     
@@ -35,43 +35,48 @@
         } ?>
         -
         <?php echo getRelativeTime($threadData[0]['lastpost']); ?>
+        <?php if(!$threadData[0]['readonly'] && ($threadData[0]['author'] == $_SESSION['id'] || $_SESSION['type'] == 'admin')){ ?>
+          -
+          <a href="<?php echo ROOT_URL.'/forum/thread.php?thread='.filter_var($threadData[0]['id'], FILTER_SANITIZE_NUMBER_INT); ?>"><span class="glyphicon glyphicon-pencil"></span></a>
+        <?php } ?>
       </div>
 
     </div>
 
   </div>
 
-  <!--<div class="callout-list hover" style="margin-top:20px;">
+  <div class="callout-list" style="margin: 0 -20px;">
 
     <?php
       foreach($data as $post){
         ?>
 
-          <a class="callout-list-item" href="<?php echo ROOT_URL;?>/forum/posts.php?thread=<?php echo filter_var($thread['id'], FILTER_SANITIZE_NUMBER_INT); ?>">
-            <div class="callout-list-item-header"><?php echo htmlspecialchars($thread['title']); ?></div>
-            <p>
-              <?php if($thread['authortype'] == 'admin'){ ?>
-                <span class="admin-badge"><?php echo htmlspecialchars($thread['authorusername']); ?></span>
-              <?php } else {
-                echo htmlspecialchars($thread['authorusername']);
-              } ?>
-              -
-              <?php echo getRelativeTime($thread['lastpost']); ?>
-            </p>
+          <div class="callout-list-item">
+            
+            <?php echo $purifier->purify($post['content']); ?>
 
-            <div class="callout-list-item-icons">
-              <?php
-                if($thread['sticky']) echo '<span class="glyphicon glyphicon-star"></span>'; 
-                if($thread['readonly']) echo '<span class="glyphicon glyphicon-lock"></span>'; 
-              ?>
+            <div style="text-align:right;">
+              <?php if($post['authortype'] == 'admin'){ ?>
+                <span class="admin-badge"><?php echo htmlspecialchars($post['authorusername']); ?></span>
+                -
+                <?php echo getRelativeTime($post['posttime']); ?>
+              <?php } else {
+                echo htmlspecialchars($post['authorusername']).' - '.getRelativeTime($post['posttime']);
+              } ?>
+
+              <?php if(!$threadData[0]['readonly'] && ($post['author'] == $_SESSION['id'] || $_SESSION['type'] == 'admin')){ ?>
+                -
+                <a href="<?php echo ROOT_URL.'/forum/post.php?post='.filter_var($post['id'], FILTER_SANITIZE_NUMBER_INT); ?>"><span class="glyphicon glyphicon-pencil"></span></a>
+              <?php } ?>
             </div>
-          </a>
+
+          </div>
 
         <?php
       }
     ?>
   	
-  </div>-->
+  </div>
 
 </div>
 
