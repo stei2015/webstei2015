@@ -5,6 +5,7 @@ require_once(__DIR__.'/../../include/auth.php');
 require_once(__DIR__.'/../../include/time.php');
 require_once(__DIR__.'/../../models/thread.php');
 require_once(__DIR__.'/../../models/post.php');
+require_once(__DIR__.'/../../config.php');
 require_once(__DIR__.'/../../include/htmlpurifier/library/HTMLPurifier.auto.php');
 
 ensureLogin();
@@ -35,7 +36,9 @@ if($threadData === false){
 	httpError(404, 'Thread tidak ditemukan');
 }
 
-$purifier = new HTMLPurifier();
+$config = HTMLPurifier_Config::createDefault();
+$config->set('Cache', 'SerializerPath', DATA_DIR.'HTMLPurifierCache');
+$purifier = new HTMLPurifier($config);
 
 require(__DIR__.'/../../views/forum/posts.php');
 
