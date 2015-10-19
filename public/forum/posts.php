@@ -5,7 +5,7 @@ require_once(__DIR__.'/../../include/auth.php');
 require_once(__DIR__.'/../../include/time.php');
 require_once(__DIR__.'/../../models/thread.php');
 require_once(__DIR__.'/../../models/post.php');
-require_once(__DIR__.'/../../include/htmlpurifier//library/HTMLPurifier.auto.php');
+require_once(__DIR__.'/../../include/htmlpurifier/library/HTMLPurifier.auto.php');
 
 ensureLogin();
 
