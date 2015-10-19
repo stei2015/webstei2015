@@ -14,7 +14,9 @@
 
   <form method="POST">
 
-    <input type="hidden" name="forum" value="<?php echo htmlspecialchars($forum); ?>">
+    <?php if(isset($forum)){ ?>
+      <input type="hidden" name="forum" value="<?php echo htmlspecialchars($forum); ?>">
+    <?php } ?>
     
     <div class="form-group">
       <label for="title" class="sr-only">Judul</label>
