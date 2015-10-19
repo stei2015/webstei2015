@@ -36,6 +36,10 @@ if($threadData === false){
 	httpError(404, 'Thread tidak ditemukan');
 }
 
+if(count($threadData) == 0){
+	httpError(404, 'Data thread tidak ditemukan');
+}
+
 $config = HTMLPurifier_Config::createDefault();
 $config->set('Cache.SerializerPath', DATA_DIR.'HTMLPurifierCache');
 $purifier = new HTMLPurifier($config);

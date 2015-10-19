@@ -35,6 +35,10 @@ if($forumData === false){
   httpError(404, 'Forum tidak ditemukan');
 }
 
+if(count($forumData) == 0){
+	httpError(404, 'Data forum tidak ditemukan');
+}
+
 require(__DIR__.'/../../views/forum/threads.php');
 
 ?>
