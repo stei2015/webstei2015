@@ -41,7 +41,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	if($post === 'new'){ //insert
 
+		if(!isset($_POST['thread'])){
+			httpError(500, 'Parameter thread tidak ditemukan');
+		}
 		$thread = filter_var($_POST['thread'], FILTER_SANITIZE_NUMBER_INT);
+
+		//TODO: check whether destination thread is readonly
 
 		$insertUpdateResult = insertPosts([
 			'values' => [

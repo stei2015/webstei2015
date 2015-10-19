@@ -14,7 +14,9 @@
 
   <form method="POST">
 
-    <input type="hidden" name="thread" value="<?php echo htmlspecialchars($thread); ?>">
+    <?php if(isset($thread)){ ?>
+      <input type="hidden" name="thread" value="<?php echo htmlspecialchars($thread); ?>">
+    <?php } ?>
 
     <div class="form-group">
       <textarea id="contenteditor" name="content" rows="12">
