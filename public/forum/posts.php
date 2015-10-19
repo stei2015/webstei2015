@@ -37,7 +37,7 @@ if($threadData === false){
 }
 
 $config = HTMLPurifier_Config::createDefault();
-$config->set('Cache', 'SerializerPath', DATA_DIR.'HTMLPurifierCache');
+$config->set('Cache.SerializerPath', DATA_DIR.'HTMLPurifierCache');
 $purifier = new HTMLPurifier($config);
 
 require(__DIR__.'/../../views/forum/posts.php');
