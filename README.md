@@ -23,6 +23,7 @@ OR make sure all local changes are committed to dev, then run `git push openshif
 2. Create a new database named `webstei2015`
 3. Import empty database structure `webstei2015.sql` or other phpmyadmin backup sql file.
 4. Run `rhc ssh web`, upload existing data folder to `app-root/data`
+5. Create `profilepictures` and `HTMLPurifierCache` directory in the data directory if it doesn't exist yet and make sure it has write permission
 
 ## TODO
 
