@@ -105,8 +105,42 @@ return [
     |
     */
 
-    'attributes'           => [
-        //
+    'attributes' => [
+        
+        'created_at'            => 'waktu dibuat',
+        'updated_at'           => 'waktu diubah',
+
+        'nim'                   => 'NIM',
+        'username'              => 'username',
+        'password'              => 'password',
+        'role'                  => 'jenis akun',
+        'last_login'            => 'waktu terakhir login',
+        'remember_token'        => 'token pengingat',
+        'nama_lengkap'          => 'nama lengkap',
+        'nama_panggilan'        => 'nama panggilan',
+        'tempat_lahir'          => 'tempat lahir',
+        'tanggal_lahir'         => 'tanggal lahir',
+        'sma'                   => 'SMA',
+        'alamat_asal'           => 'alamat asal',
+        'kota_asal'             => 'kota asal',
+        'provinsi_asal'         => 'provinsi asal',
+        'kode_pos_asal'         => 'kode pos asal',
+        'alamat_studi'          => 'alamat studi',
+        'kode_pos_studi'        => 'kode pos studi',
+        'hp'                    => 'nomor HP',
+        'telepon_darurat'       => 'telepon darurat',
+        'email'                 => 'email',
+        'email_students'        => 'email students.itb.ac.id',
+        'line'                  => 'LINE',
+        'twitter'               => 'Twitter',
+        'facebook'              => 'Facebook',
+        'golongan_darah'        => 'golongan darah',
+        'riwayat_penyakit'      => 'riwayat penyakit',
+        'unit'                  => 'unit',
+        'bio'                   => 'bio/deskripsi diri',
+        'catatan'               => 'catatan',
+        'nim_tpb'               => 'NIM TPB',
+
     ],
 
 ];

@@ -37,6 +37,8 @@
 		
 		{{ $studentData }}
 
+		{{ trans('validation.attributes.nim_tpb') }}
+
 		<div class="table-responsive">
 
 		  	<table class="table table-hover">
