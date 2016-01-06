@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers\Auth;
 
+
 use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class AuthController extends Controller
 {
     use ThrottlesLogins;
 
-    protected $redirectLogin = '/dashboard';
+    protected $redirectLogin = '/';
     protected $redirectLogout = '/login';
     protected $redirectRegister = '/studentdata';
     protected $usernameField = 'username';
@@ -31,7 +34,7 @@ class AuthController extends Controller
      *
      * @return string
      */
-    protected function getLoginUsername()
+    protected function loginUsername()
     {
         return property_exists($this, 'usernameField') ? $this->usernameField : 'username';
     }
@@ -49,7 +52,7 @@ class AuthController extends Controller
 
     /**
      * Handle a login request to the application.
-     * Requires $usernameField, password, remember request fields.
+     * Requires $this->usernameField, password, remember request fields.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -57,18 +60,22 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $this->validate($request, [
-            $usernameField => 'required', 'password' => 'required',
+            $this->usernameField => 'required', 'password' => 'required',
         ]);
 
-        $throttles = $this->isUsingThrottlesLoginsTrait();
+        // Check whether this controller is using ThrottlesLogins trait
+        $throttles = in_array(ThrottlesLogins::class, class_uses_recursive(get_class($this)));
 
         if ($throttles && $this->hasTooManyLoginAttempts($request)) {
             return $this->sendLockoutResponse($request);
         }
 
-        $credentials = $request->only($usernameField, 'password');
+        $credentials = $request->only($this->usernameField, 'password');
 
-        if (Auth::attempt($credentials, $request->has('remember'))) {
+        // Try to authenticate using username or NIM
+
+        if (Auth::attempt(['username' => $request[$this->usernameField], 'password' => $request['password']], $request->has('remember')) 
+            || Auth::attempt(['nim' => $request[$this->usernameField], 'password' => $request['password']], $request->has('remember'))) {
 
             // Authentication successful
 
@@ -76,7 +83,7 @@ class AuthController extends Controller
                 $this->clearLoginAttempts($request);
             }
 
-            return redirect()->intended($redirectLogin);
+            return redirect()->intended($this->redirectLogin);
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
@@ -89,9 +96,9 @@ class AuthController extends Controller
         $failedLoginMessage = Lang::has('auth.failed') ? Lang::get('auth.failed') : 'These credentials do not match our records.';
 
         return redirect()->back()
-            ->withInput($request->only($usernameField, 'remember'))
+            ->withInput($request->only($this->usernameField, 'remember'))
             ->withErrors([
-                $usernameField => $failedLoginMessage,
+                $this->usernameField => $failedLoginMessage,
             ]);
     }
 
@@ -117,18 +124,18 @@ class AuthController extends Controller
             'nim' => 'required|numeric|min:16515001|max:16515500|unique:users',
             'username' => 'required|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
-            'regcode' => 'required|same:stei2015'
+            'regcode' => config('app.regcode') ? 'required|same:'.config('app.regcode') : '',
         ]);;
 
         $newUser = User::create([
-            'nim' => $request['nim'];
+            'nim' => $request['nim'],
             'username' => $request['username'],
             'password' => bcrypt($request['password']),
         ]);
 
         Auth::login($newUser);
 
-        return redirect($redirectRegister);
+        return redirect($this->redirectRegister);
     }
 
     /**
@@ -139,7 +146,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect($redirectLogout);
+        return redirect($this->redirectLogout);
     }
 
 }
