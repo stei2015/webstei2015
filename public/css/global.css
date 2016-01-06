@@ -1,0 +1,311 @@
+
+.form-login {
+	max-width: 350px;
+	padding: 5px;
+	margin: 0 auto;
+	margin-top:10%;
+}
+
+.form-login .input-group {
+	margin-bottom: 5px;
+}
+
+.form-login .btn {
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+.form-register {
+	max-width: 500px;
+	padding: 5px;
+	margin: 0 auto;
+	margin-top: 4%;
+}
+
+.error-text {
+	display:none;
+}
+
+.has-error .error-text {
+	display: inline;
+	color: #F04124;
+}
+
+.callout {
+	background-color: #fff;
+	border-left: solid 5px #008cba;
+	padding: 10px 40px 20px 40px;
+}
+
+.callout-list.hover .callout-list-item {
+  cursor: pointer;
+}
+
+.callout-list-item {
+  position: relative;
+  display:block;
+  color: #222;
+  text-decoration: none;
+  background-color: #fff;
+  border-left: solid 5px #008cba;
+  padding: 16px 16px 10px 16px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+.callout-list-item-icons {
+  position: absolute;
+  display: block;
+  top: 10px;
+  right: 10px;
+}
+
+.admin-badge {
+  font-weight: bold;
+  color: #e23;
+}
+
+.forum-header-text {
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 100px 20px 20px 20px;
+  position: relative;
+}
+
+.btn-header {
+  position: absolute;
+  bottom: 5px;
+  right: 0;
+}
+.callout-list-item-icons .glyphicon-star {
+  color: orange;
+}
+.callout-list-item-icons .glyphicon-lock {
+  color: gray;
+}
+
+.callout-list.hover > .callout-list-item:hover,
+.callout-list.hover > .callout-list-item:focus {
+  border-left: solid 5px #33bfed;
+  color: #222;
+  text-decoration: none;
+}
+
+.callout-list.hover > .callout-list-item:active {
+  border-left: solid 5px #4dd9ff;
+  color: #222;
+  text-decoration: none;
+}
+
+
+.callout-list-item-header {
+  font-size: 18px;
+  font-weight: 700;
+  display: block;
+}
+
+body {
+	background-color: #eee;
+}
+
+.field-header {
+  font-weight: 500;
+  color: #555;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.page-header {
+  margin-top: 23px;
+}
+
+.page-header > .thread-actions {
+  margin-left: 42px;
+}
+
+.table th {
+  white-space: nowrap;
+}
+.table-hover > tbody > tr {
+  cursor: pointer;
+}
+
+
+.navbar .navbar-brand, .navbar .user-display {
+  font-weight: 700;
+}
+
+.navbar-nav {
+  margin: 0;
+}
+
+.navbar-nav > li > a {
+  height: 45px;
+}
+
+.navbar .user-display {
+  padding-right: 60px;
+}
+
+.navbar .profile-picture {
+  width:45px;
+  height:45px;
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.basic-table td, .basic-table th {
+  padding-right: 20px;
+  padding-bottom: 10px;
+}
+
+
+.sidebar {
+  position: fixed;
+  top:45px;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+  display: block;
+  background-color: #222;
+}
+
+.page-container {
+  padding-top: 85px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.page-container-full {
+  padding-top: 85px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+
+.nav-sidebar {
+  float:left;
+}
+
+.nav-sidebar.right {
+  float:right;
+}
+
+.nav-sidebar > li {
+  float:left;
+}
+
+.nav-sidebar > li.caption {
+  display:none;
+}
+
+.nav-sidebar > li > a {
+  font-size: 16px;
+  color: #bbb;
+  padding: 10px 14.3px;
+}
+
+.nav-sidebar > li > a > .link-text {
+  display:none;
+}
+
+.nav-sidebar > li > a > .glyphicon {
+  margin-right: 0;
+}
+
+.nav-sidebar > li > a:hover,
+.nav-sidebar > li > a:focus {
+  background-color: #333;
+  outline: none;
+}
+
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #555;
+}
+
+@media (min-width: 768px){
+
+  .navbar-header.rightmost {
+    margin-right: -15px;
+  }
+
+  .sidebar {
+    width: 250px;
+    top:45px;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  }
+
+  /* Sidebar navigation */
+  .nav-sidebar {
+    margin-top: 20px;
+  }
+
+  .nav-sidebar > li.caption {
+    display:block;
+    padding: 5px 20px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: @font-size-small;
+  }
+
+  .nav-sidebar {
+    float:none;
+  }
+
+  .nav-sidebar.right {
+    float:none;
+  }
+
+  .nav-sidebar > li {
+    float:none;
+  }
+
+  .nav-sidebar > li > a {
+    padding: 10px 20px;
+  }
+
+  .nav-sidebar > li > a > .link-text {
+    display:inline;
+  }
+
+  .nav-sidebar > li > a > .glyphicon {
+    margin-right: 12px;
+  }
+
+  .page-container {
+    padding-top: 45px;
+    padding-left: 280px;
+    padding-right: 30px;
+  }
+
+  .page-container-full {
+    padding-top: 45px;
+    padding-left: 250px;
+    padding-right: 0px;
+  }
+
+  .page-header > .form-inline {
+    float:right;
+    margin-top: -50px;
+  }
+
+  .page-header > .thread-actions {
+    float:right;
+    margin-top: -40px;
+    margin-left: 0;
+  }
+
+}
+
+
