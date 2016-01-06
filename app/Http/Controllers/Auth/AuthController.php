@@ -3,32 +3,18 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Support\Facades\Lang;
 
 class AuthController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Registration & Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
-    |
-    */
+    use ThrottlesLogins;
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
-    /**
-     * Where to redirect users after login / registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/';
+    protected $redirectLogin = '/dashboard';
+    protected $redirectLogout = '/login';
+    protected $redirectRegister = '/studentdata';
+    protected $usernameField = 'username';
 
     /**
      * Create a new authentication controller instance.
@@ -41,32 +27,119 @@ class AuthController extends Controller
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Get login username field for the ThrottlesLogins trait.
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @return string
      */
-    protected function validator(array $data)
+    protected function getLoginUsername()
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
+        return property_exists($this, 'usernameField') ? $this->usernameField : 'username';
+    }
+
+
+    /**
+     * Show the application login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLogin()
+    {
+        return view('auth.login');
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * Handle a login request to the application.
+     * Requires $usernameField, password, remember request fields.
      *
-     * @param  array  $data
-     * @return User
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    protected function create(array $data)
+    public function login(Request $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+        $this->validate($request, [
+            $usernameField => 'required', 'password' => 'required',
         ]);
+
+        $throttles = $this->isUsingThrottlesLoginsTrait();
+
+        if ($throttles && $this->hasTooManyLoginAttempts($request)) {
+            return $this->sendLockoutResponse($request);
+        }
+
+        $credentials = $request->only($usernameField, 'password');
+
+        if (Auth::attempt($credentials, $request->has('remember'))) {
+
+            // Authentication successful
+
+            if ($throttles) {
+                $this->clearLoginAttempts($request);
+            }
+
+            return redirect()->intended($redirectLogin);
+        }
+
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        if ($throttles) {
+            $this->incrementLoginAttempts($request);
+        }
+
+        $failedLoginMessage = Lang::has('auth.failed') ? Lang::get('auth.failed') : 'These credentials do not match our records.';
+
+        return redirect()->back()
+            ->withInput($request->only($usernameField, 'remember'))
+            ->withErrors([
+                $usernameField => $failedLoginMessage,
+            ]);
     }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegister()
+    {
+        return view('auth.register');
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validate($request, [
+            'nim' => 'required|numeric|min:16515001|max:16515500|unique:users',
+            'username' => 'required|max:255|unique:users',
+            'password' => 'required|confirmed|min:6',
+            'regcode' => 'required|same:stei2015'
+        ]);;
+
+        $newUser = User::create([
+            'nim' => $request['nim'];
+            'username' => $request['username'],
+            'password' => bcrypt($request['password']),
+        ]);
+
+        Auth::login($newUser);
+
+        return redirect($redirectRegister);
+    }
+
+    /**
+     * Logs out the user.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function logout()
+    {
+        Auth::logout();
+        return redirect($redirectLogout);
+    }
+
 }
