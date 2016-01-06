@@ -18,41 +18,42 @@ class CreateUsersTable extends Migration
             $table->string('username');
             $table->string('password', 75);
             $table->string('role');
-            $table->dateTime('lastlogin');
+            $table->dateTime('last_login');
             $table->rememberToken();
             $table->timestamps();
 
-            $table->string('namalengkap');
-            $table->string('namapanggilan');
+            $table->string('nama_lengkap');
+            $table->string('nama_panggilan');
 
-            $table->string('tempatlahir');
-            $table->date('tanggallahir');
+            $table->string('tempat_lahir');
+            $table->date('tanggal_lahir');
 
             $table->string('sma');
 
-            $table->string('alamatasal');
-            $table->string('kotaasal');
-            $table->string('provinsiasal');
-            $table->integer('kodeposasal');
+            $table->string('alamat_asal');
+            $table->string('kota_asal');
+            $table->string('provinsi_asal');
+            $table->integer('kode_pos_asal');
 
-            $table->string('alamatstudi');
-            $table->integer('kodeposstudi');
+            $table->string('alamat_studi');
+            $table->integer('kode_pos_studi');
 
             $table->string('hp');
-            $table->string('telepondarurat');
+            $table->string('telepon_darurat');
             $table->string('email');
-            $table->string('emailstudents');
+            $table->string('email_students');
             $table->string('line');
             $table->string('twitter');
             $table->string('facebook');
 
-            $table->string('golongandarah');
-            $table->string('riwayatpenyakit');
+            $table->string('golongan_darah');
+            $table->string('riwayat_penyakit');
 
-            $table->integer('nimtpb');
             $table->string('unit');
             $table->string('bio');
             $table->string('catatan');
+
+            $table->integer('nim_tpb');
 
         });
     }

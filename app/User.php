@@ -16,29 +16,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'namalengkap',
-        'namapanggilan',
-        'tempatlahir',
-        'tanggallahir',
-        'sma',
-        'alamatasal',
-        'kotaasal',
-        'provinsiasal',
-        'kodeposasal',
-        'alamatstudi',
-        'kodeposstudi',
-        'hp',
-        'telepondarurat',
-        'email',
-        'emailstudents',
-        'line',
-        'twitter',
-        'facebook',
-        'golongandarah',
-        'riwayatpenyakit',
-        'unit',
-        'bio',
-        'catatan',
+        'nama_lengkap',      'nama_panggilan',    'tempat_lahir',     'tanggal_lahir',
+        'sma',               'alamat_asal',       'kota_asal',        'provinsi_asal',
+        'kode_pos_asal',     'alamat_studi',      'kode_pos_studi',   'hp',
+        'telepon_darurat',   'email',             'email_students',   'line',
+        'twitter',           'facebook',          'golongan_darah',   'riwayat_penyakit',
+        'unit',              'bio',               'catatan',
     ];
 
     /**
@@ -47,7 +30,34 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'lastlogin',
+        'password', 'remember_token', 'last_login',
+    ];
+
+    public $columns = [
+        'nama_lengkap',
+        'nama_panggilan',
+        'tempat_lahir',
+        'tanggal_lahir',
+        'sma',
+        'alamat_asal',
+        'kota_asal',
+        'provinsi_asal',
+        'kode_pos_asal',
+        'alamat_studi',
+        'kode_pos_studi',
+        'hp',
+        'telepon_darurat',
+        'email',
+        'email_students',
+        'line',
+        'twitter',
+        'facebook',
+        'golongan_darah',
+        'riwayat_penyakit',
+        'unit',
+        'bio',
+        'catatan',
+        'nim_tpb',
     ];
 
 }
