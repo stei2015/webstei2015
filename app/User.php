@@ -55,7 +55,8 @@ class User extends Authenticatable
         ],
     ];
 
-    public function scopeFilter ($query, $privilege, $search = null, $by = '') {
+    
+    public function scopeFilter ($query, $privilege, $search = '', $by = '') {
         
         $query = $query->select($this->privilegeColumns[$privilege]);
 

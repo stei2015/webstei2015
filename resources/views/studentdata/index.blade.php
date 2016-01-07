@@ -15,7 +15,7 @@
 
 			<form class="form-inline" method="GET">
 				<div class="input-group">
-					<input type="search" name="search" placeholder="Cari..." class="form-control" value="{{ old('search') }}">
+					<input type="search" name="search" placeholder="Cari..." class="form-control" value="{{ $search }}">
 					<span class="input-group-btn">
 						<button class="btn btn-default" type="submit">
 							<span class="glyphicon glyphicon-search"></span>
@@ -23,21 +23,16 @@
 					</span>
 				</div>
 				<select name="by" class="form-control">
-					<?php
-						/*if(isset($_GET['by'])) $selectedKey = $_GET['by']; else $selectedKey = 'namalengkap';
-						foreach($searchColumns as $key => $val){
-							if($key == $selectedKey) $selected = 'selected'; else $selected = '';
-							echo '<option value="'.$key.'" '.$selected.'>'.$val.'</option>';
-						}*/
-					?>
+					<?php $selectedKey = $by != '' ? $by : 'nama_lengkap'; ?>
+					@foreach ($studentDataColumns as $column)
+						<option value="{{ $column }}" {{ $column == $selectedKey ? 'selected' : '' }}>{{ ucfirst(trans('validation.attributes.'.$column)) }}</option>
+					@endforeach
 				</select>
 			</form>
 
 		</div>
 		
 		{{ $studentData }}
-
-		{{ trans('validation.attributes.nim_tpb') }}
 
 		<div class="table-responsive">
 

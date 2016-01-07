@@ -22,9 +22,16 @@ class StudentData extends Controller
     public function index(Request $request)
     {
 
-    	$studentData = User::filter('public')->orderBy('nim')->get();
+        $privilege = 'public';
 
-    	return view('studentdata.index', ['studentData' => $studentData]);
+    	$studentData = User::filter($privilege, $request['search'], $request['by'])->orderBy('nim')->get();
+
+    	return view('studentdata.index', [
+            'studentData' => $studentData,
+            'studentDataColumns' => with(new User)->privilegeColumns[$privilege],
+            'search' => $request['search'],
+            'by' => $request['by'],
+        ]);
     }
 
 
