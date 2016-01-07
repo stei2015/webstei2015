@@ -22,7 +22,7 @@ class StudentData extends Controller
     public function index(Request $request)
     {
 
-    	$studentData = User::get();
+    	$studentData = User::filter('public')->orderBy('nim')->get();
 
     	return view('studentdata.index', ['studentData' => $studentData]);
     }

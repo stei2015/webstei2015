@@ -140,6 +140,7 @@ return [
         'bio'                   => 'bio/deskripsi diri',
         'catatan'               => 'catatan',
         'nim_tpb'               => 'NIM TPB',
+        'prodi'                 => 'program studi',
 
     ],
 

@@ -54,6 +54,7 @@ class CreateUsersTable extends Migration
             $table->string('catatan');
 
             $table->integer('nim_tpb');
+            $table->string('prodi');
 
         });
     }

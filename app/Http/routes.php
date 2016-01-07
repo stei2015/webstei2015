@@ -53,7 +53,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 	// Student data routes
 
 	Route::group(['prefix' => 'studentdata'], function () {
-		Route::get('index', 'StudentData@index');
+		Route::get('', 'StudentData@index');
 		//Route::get('/{nim}', 'StudentData@show');
 		//Route::get('/{nim}/edit', 'StudentData@edit');
 		//Route::put('/{nim}', 'StudentData@update');

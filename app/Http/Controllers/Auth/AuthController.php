@@ -127,11 +127,11 @@ class AuthController extends Controller
             'regcode' => config('app.regcode') ? 'required|same:'.config('app.regcode') : '',
         ]);;
 
-        $newUser = User::create([
-            'nim' => $request['nim'],
-            'username' => $request['username'],
-            'password' => bcrypt($request['password']),
-        ]);
+        $newUser = new User;
+        $newUser->nim = $request['nim'];
+        $newUser->username = $request['username'];
+        $newUser->password = bcrypt($request['password']);
+        $newUser->save();
 
         Auth::login($newUser);
 
