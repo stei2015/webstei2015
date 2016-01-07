@@ -32,17 +32,30 @@
 
 		</div>
 		
-		{{ $studentData }}
-
 		<div class="table-responsive">
-
 		  	<table class="table table-hover">
 
+		  		<thead>
+			  		<tr>
+						@foreach ($studentDataColumns as $column)
+		  					<th>{{ ucfirst(trans('validation.attributes.'.$column)) }}</th>
+		  				@endforeach
+					</tr>
+				</thead>
 
+				<tbody>
+			  		@forelse ($studentData as $student)
 
+			  			<tr onclick="document.location='{{ url('studentdata/'.$student['nim']) }}';" >
+							@foreach ($studentDataColumns as $column)
+			  					<td>{{ $student[$column] }}</td>
+			  				@endforeach
+						</tr>
 
-	  		
-			  
+			  		@empty
+			  			<tr><td colspan="{{ count($studentDataColumns) }}">Tidak ada data.</td></tr>
+			  		@endforelse
+			  	</tbody>
 
 			</table>
 		</div>

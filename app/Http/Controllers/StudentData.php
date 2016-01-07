@@ -22,7 +22,7 @@ class StudentData extends Controller
     public function index(Request $request)
     {
 
-        $privilege = 'public';
+        $privilege = 'private';
 
     	$studentData = User::filter($privilege, $request['search'], $request['by'])->orderBy('nim')->get();
 
