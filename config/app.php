@@ -15,6 +15,10 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+    // Registration code (optional)
+
+    'regcode' => env('REGCODE', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
