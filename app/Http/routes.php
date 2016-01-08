@@ -45,7 +45,7 @@ Route::group(['middleware' => ['web', 'guest']], function () {
 Route::group(['middleware' => ['web', 'auth']], function () {
 
 	Route::get('/', function () {
-	    return view('welcome');
+	    return redirect('studentdata');
 	});
 
 	Route::get('/logout', 'Auth\AuthController@logout');
@@ -61,12 +61,12 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 
 	// Profile picture routes
 
-	/*Route::group(['prefix' => 'profilepictures'], function () {
+	Route::group(['prefix' => 'profilepictures'], function () {
 		Route::get('/{nim}', 'ProfilePicture@show');
 		Route::get('/{nim}/edit', 'ProfilePicture@edit');
 		Route::put('/{nim}', 'ProfilePicture@update');
 	});
-	*/
+
 });
 
 /* RESTful routes

@@ -45,9 +45,11 @@ class StudentData extends Controller
     public function show(Request $request)
     {
 
-        $privilege = Gate::allows('studentdata-showprivate', $request->nim) ? 'private' : 'public';
+        $nim = filter_var($request->nim, FILTER_SANITIZE_NUMBER_INT);
 
-        $studentData = User::filter($privilege)->findOrFail($request->nim);
+        $privilege = Gate::allows('studentdata-showprivate', $nim) ? 'private' : 'public';
+
+        $studentData = User::filter($privilege)->findOrFail($nim);
 
         return view('studentdata.show', [
             'studentData' => $studentData,
@@ -63,11 +65,13 @@ class StudentData extends Controller
     public function edit(Request $request)
     {
 
-        if (Gate::denies('studentdata-edit', $request->nim)) {
+        $nim = filter_var($request->nim, FILTER_SANITIZE_NUMBER_INT);
+
+        if (Gate::denies('studentdata-edit', $nim)) {
             abort(403);
         }
 
-        $studentData = User::findOrFail($request->nim);
+        $studentData = User::findOrFail($nim);
 
         return view('studentdata.edit', [
             'studentData' => $studentData,
@@ -83,7 +87,9 @@ class StudentData extends Controller
     public function update(Request $request)
     {
 
-        if (Gate::denies('studentdata-edit', $request->nim)) {
+        $nim = filter_var($request->nim, FILTER_SANITIZE_NUMBER_INT);
+
+        if (Gate::denies('studentdata-edit', $nim)) {
             abort(403);
         }
 
@@ -103,11 +109,11 @@ class StudentData extends Controller
             'email_students'    => 'required|email',
         ]);
 
-        $studentData = User::findOrFail($request->nim);
+        $studentData = User::findOrFail($nim);
         $studentData->fill($request->input());
         $studentData->save();
 
-        return redirect('studentdata/'.$request->nim)->with('info', 'Data diri berhasil disimpan');
+        return redirect('studentdata/'.$nim)->with('info', 'Data diri berhasil disimpan');
     }
 
 

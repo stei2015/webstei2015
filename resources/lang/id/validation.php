@@ -142,6 +142,9 @@ return [
         'nim_tpb'               => 'NIM TPB',
         'prodi'                 => 'program studi',
 
+        'regcode'               => 'kode registrasi',
+
+        'profilepicture'        => 'foto profil'
     ],
 
 ];
