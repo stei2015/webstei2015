@@ -30,16 +30,16 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->define('studentdata-showprivate', function ($user, $studentData) {
             if (!is_object($studentData)) {
-                $studentData = ['nim' => $studentData];
+                $studentData = ['nim' => (integer) $studentData];
             }
-            return $user['nim'] == $studentData['nim'] || $user->hasRole('studentdata-showprivate-all');
+            return $user['nim'] === $studentData['nim'] || $user->hasRole('studentdata-showprivate-all');
         });
 
         $gate->define('studentdata-edit', function ($user, $studentData) {
             if (!is_object($studentData)) {
-                $studentData = ['nim' => $studentData];
+                $studentData = ['nim' => (integer) $studentData];
             }
-            return $user['nim'] == $studentData['nim'] || $user->hasRole('studentdata-edit-all');
+            return $user['nim'] === $studentData['nim'] || $user->hasRole('studentdata-edit-all');
         });
     }
 }
