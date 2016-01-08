@@ -186,6 +186,10 @@ body {
   padding-right: 0px;
 }
 
+.alert-container {
+  position: relative;
+  margin-top:20px;
+}
 
 .nav-sidebar {
   float:left;
@@ -231,6 +235,16 @@ body {
 }
 
 @media (min-width: 768px){
+
+  .alert-container {
+    margin-top:0;
+    position:fixed;
+    top: 60px;
+    right: 10px;
+    z-index: 9999;
+    width: auto;
+    left: auto;
+  }
 
   .navbar-header.rightmost {
     margin-right: -15px;

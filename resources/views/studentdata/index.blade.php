@@ -9,6 +9,8 @@
 @section('content')
 
 	<div class="page-container">
+
+		@include('parts.alert')
 	
 		<div class="page-header">
 			<h1>Data Mahasiswa</h1>
