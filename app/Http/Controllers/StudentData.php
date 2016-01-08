@@ -34,6 +34,24 @@ class StudentData extends Controller
         ]);
     }
 
+    /**
+     * Shows individual student data
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request)
+    {
+
+        $privilege = 'private';
+
+        $studentData = User::filter($privilege)->findOrFail($request->nim);
+
+        return view('studentdata.show', [
+            'studentData' => $studentData,
+        ]);
+    }
+
 
 
 }
