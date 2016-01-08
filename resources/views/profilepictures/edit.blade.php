@@ -14,9 +14,13 @@
 
 		<div class="page-header">
 			<h1>Edit Foto Profil <small>{{ $nim }}</small></h1>
-			<p>Foto sebaiknya foto wajah dan bukan foto grup. Ukuran file maksimal 256 KB.</p>
+			<a href="{{ url('studentdata/'.$nim) }}">&laquo; Kembali</a>
+    		/
 			<a href="{{ url('studentdata/'.$nim.'/edit') }}">Edit data diri</span></a>
 		</div>
+
+		<p>Foto sebaiknya foto wajah dan bukan foto grup. Ukuran file maksimal 256 KB.</p>
+		<hr>
 	
 		<form action="{{ url('profilepictures/'.$nim) }}" method="POST" enctype="multipart/form-data">
 		
@@ -36,7 +40,7 @@
 		    <br>
 
 		    <button class="btn btn-primary">Upload <span class="glyphicon glyphicon-upload"></span></button>
-		    
+
 		</form>
 		<br><br>
 

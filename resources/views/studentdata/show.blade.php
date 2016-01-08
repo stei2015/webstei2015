@@ -15,7 +15,9 @@
 		<div class="page-header">
 			<h1>Profil <small>{{ $studentData['username'] }}</small></h1>
 
+			<a href="{{ url('studentdata') }}">&laquo; Kembali</a>
 			@can('studentdata-edit', $studentData)
+				/
 				<a href="{{ url('studentdata/'.$studentData['nim'].'/edit') }}">Edit data diri</a>
 				/
 				<a href="{{ url('profilepictures/'.$studentData['nim'].'/edit') }}">Edit foto</span></a>

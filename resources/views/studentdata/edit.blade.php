@@ -14,9 +14,13 @@
 	
 		<div class="page-header">
 			<h1>Data Diri <small>{{ $studentData['nim'] }}</small></h1>
-    		<p>Data bertanda <span class="text-muted glyphicon glyphicon-lock"></span> tidak akan dipublikasikan</p>
+    		<a href="{{ url('studentdata/'.$studentData['nim']) }}">&laquo; Kembali</a>
+    		/
 			<a href="{{ url('profilepictures/'.$studentData['nim'].'/edit') }}">Edit foto</span></a>
 		</div>
+
+		<p>Isian bertanda <span class="text-muted glyphicon glyphicon-lock"></span> tidak akan dipublikasikan</p>
+		<hr>
 
 		<form action="{{ url('studentdata/'.$studentData['nim']) }}" method="POST">
 
@@ -222,7 +226,6 @@
 		      <label class="error-text">{{ $errors->first('catatan') }}</label>
 		    </div>
 
-		    <br>
 		    <button class="btn btn-primary">Simpan <span class="glyphicon glyphicon-check"></span></button>
 		    
 		</form>
