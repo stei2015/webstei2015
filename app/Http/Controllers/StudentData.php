@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Gate;
+use Auth;
 use App\User;
 use Illuminate\Support\Facades\Lang;
 
@@ -22,7 +24,7 @@ class StudentData extends Controller
     public function index(Request $request)
     {
 
-        $privilege = 'private';
+        $privilege = Auth::user()->hasRole('studentdata-showprivate-all') ? 'private' : 'public';
 
     	$studentData = User::filter($privilege, $request['search'], $request['by'])->orderBy('nim')->get();
 
@@ -43,7 +45,7 @@ class StudentData extends Controller
     public function show(Request $request)
     {
 
-        $privilege = 'private';
+        $privilege = Gate::allows('studentdata-showprivate', $request->nim) ? 'private' : 'public';
 
         $studentData = User::filter($privilege)->findOrFail($request->nim);
 

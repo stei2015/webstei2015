@@ -36,7 +36,7 @@ class User extends Authenticatable
     public $privilegeColumns = [
 
         'public' => [
-            'nim',               'username',          'role',
+            'nim',               'username',
             'nama_lengkap',      'nama_panggilan',
             'sma',               'kota_asal',         'provinsi_asal',
             'email',             'email_students',    'line',
@@ -45,7 +45,7 @@ class User extends Authenticatable
         ],
 
         'private' => [
-            'nim',               'username',          'role',
+            'nim',               'username',
             'nama_lengkap',      'nama_panggilan',    'tempat_lahir',     'tanggal_lahir',
             'sma',               'alamat_asal',       'kota_asal',        'provinsi_asal',
             'kode_pos_asal',     'alamat_studi',      'kode_pos_studi',   'hp',
@@ -55,6 +55,10 @@ class User extends Authenticatable
         ],
     ];
 
+    public function hasRole($role) {
+        $roles = explode(',', $this['roles']);
+        return in_array($role, $roles);
+    }
     
     public function scopeFilter ($query, $privilege, $search = '', $by = '') {
         

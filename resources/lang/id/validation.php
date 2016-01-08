@@ -113,7 +113,7 @@ return [
         'nim'                   => 'NIM',
         'username'              => 'username',
         'password'              => 'password',
-        'role'                  => 'jenis akun',
+        'roles'                 => 'otorisasi',
         'last_login'            => 'waktu terakhir login',
         'remember_token'        => 'token pengingat',
         'nama_lengkap'          => 'nama lengkap',

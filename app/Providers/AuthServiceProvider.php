@@ -26,6 +26,20 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        //
+        // Abilities
+
+        $gate->define('studentdata-showprivate', function ($user, $studentData) {
+            if (!is_object($studentData)) {
+                $studentData = ['nim' => $studentData];
+            }
+            return $user['nim'] == $studentData['nim'] || $user->hasRole('studentdata-showprivate-all');
+        });
+
+        $gate->define('studentdata-edit', function ($user, $studentData) {
+            if (!is_object($studentData)) {
+                $studentData = ['nim' => $studentData];
+            }
+            return $user['nim'] == $studentData['nim'] || $user->hasRole('studentdata-edit-all');
+        });
     }
 }
