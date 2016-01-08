@@ -33,6 +33,9 @@
     <li @if ($activeSection == 'contact') class="active" @endif>
       <a href="{{ url('contact') }}"><span class="glyphicon glyphicon-phone"></span><span class="link-text">Kontak</span></a>
     </li>
+    <li @if ($activeSection == 'events') class="active" @endif>
+      <a href="{{ url('events') }}"><span class="glyphicon glyphicon-calendar"></span><span class="link-text">Event</span></a>
+    </li>
   </ul>
 
   <ul class="nav nav-sidebar right">

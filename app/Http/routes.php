@@ -65,6 +65,14 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 		Route::put('/{nim}', 'ProfilePicture@update');
 	});
 
+	// Event routes
+
+	Route::group(['prefix' => 'events'], function () {
+		Route::get('/', 'Event@index');
+
+		Route::get('angelsandmortals', 'Events\AngelsAndMortals@index');
+	});
+
 });
 
 /* RESTful routes
