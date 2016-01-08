@@ -12,7 +12,13 @@ class EventAngelsandmortals extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('event_angelsandmortals', function (Blueprint $table) {
+            $table->integer('nim')->primary();
+            $table->integer('mortal')->unique();
+            $table->integer('guess');
+            $table->string('notes');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -22,6 +28,6 @@ class EventAngelsandmortals extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('event_angelsandmortals');
     }
 }
