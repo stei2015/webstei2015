@@ -19,10 +19,7 @@ class Event extends Controller
      */
     public function index(Request $request)
     {
-
-    	// For now redirect to default event, later show event list and pictures
-
-    	return redirect('events/angelsandmortals');
+    	return view('events.index');
     }
 
 }
