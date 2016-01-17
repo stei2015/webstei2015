@@ -95,7 +95,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY', env('OPENSHIFT_SECRET_TOKEN')),
 
     'cipher' => 'AES-256-CBC',
 
