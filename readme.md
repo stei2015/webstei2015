@@ -13,13 +13,10 @@ Deploy this app to a DIY cartridge. It uses a customized version of the cartridg
 
 ### Deploy Files using Git
 
-<<<<<<< HEAD
-1. Merge all changes to the Openshift deploy branch.
-2. Make sure all local changes are committed, then run `git push openshift <LOCAL OPENSHIFT DEPLOY BRANCH NAME>:master`.
-You might need to force the push using the `-f` flag.
-=======
-Make sure all local changes are committed to master, then run `git push openshift <LOCAL BRANCH NAME>:master`
->>>>>>> 0df6ff390e86fe0a85cbc6bc1d94306462a93965
+1. Make sure all changes are commited.
+2. Switch to the Openshift deploy branch using `git checkout deploy-openshift`
+3. Merge all changes to this branch using `git merge <SOURCE_BRANCH>`
+4. Run `git push -f openshift deploy-openshift:master`
 
 On the first deploy, 
 
