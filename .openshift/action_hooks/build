@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Refer to https://blog.tommyku.com/blog/setting-up-laravel-5-0-for-openshift
+
+export COMPOSER_HOME="$OPENSHIFT_DATA_DIR/.composer"
+
+# Make sure Composer is installed
+
+if [ ! -f "$OPENSHIFT_DATA_DIR/composer.phar" ]; then
+        echo 'Installing Composer'
+        curl -s https://getcomposer.org/installer | php -- --quiet --install-dir=$OPENSHIFT_DATA_DIR
+else
+        echo 'Updating Composer'
+        php $OPENSHIFT_DATA_DIR/composer.phar -q --no-ansi self-update
+fi
+
+# Install app dependencies
+
+if [ -d "$OPENSHIFT_REPO_DIR/vendor" ]; then
+        echo 'Dependencies already installed, Moving on...'
+else
+        echo 'Hang in there, we are getting ready to Install/update dependencies'
+        echo 'Installing/updating dependencies'; 
+        unset GIT_DIR ; 
+        cd $OPENSHIFT_REPO_DIR ; 
+        php $OPENSHIFT_DATA_DIR/composer.phar -q --no-ansi install ;
+fi
+
+
+
+# Link public to www (the Openshift HHVM cartridge looks in the www directory)
+
+if [ ! -e "www" ]; then
+        echo 'Linking public to www'
+        cd $OPENSHIFT_REPO_DIR ; 
+        ln -s public www
+fi
+
+# Link the cartridge's HHVM binary to a shortcut in Openshift data directory
+
+if [ ! -L "$OPENSHIFT_DATA_DIR/hhvm" ]; then
+        echo 'Linking cartridge hhvm binary to Openshift data directory'
+        ln -s "$OPENSHIFT_PHP_DIR/versions/shared/usr/bin/hhvm" "$OPENSHIFT_DATA_DIR/hhvm"
+fi
