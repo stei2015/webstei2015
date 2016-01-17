@@ -2,17 +2,7 @@
 
 ## Openshift Deployment
 
-Deploy this app to a HHVM cartridge + a MySQL cartridge.
-
-The Laravel configuration (`app/config`) has been modified to accept Openshift MySQL and secret token environment variables.
-
-Openshift action hooks are available in the .openshift directory.
-
-Storage path is taken care within the build action hook which replaces the `storage` directory with a link to the Openshift data directory. (Note: if the `app-root/data/storage` directory is not yet present, create an empty directory structure by copying Laravel's `storage` folder first).
-
-The build action hook script also installs Composer, and runs `composer install`.
-
-Note: the build action hook also creates a `hhvm` symlink in Openshift data directory for your convenience. Use this symlink to execute commands normally meant to be run using PHP (e.g. the artisan commands) as the PHP version provided by Openshift isn't compatible with Laravel 5.2.
+Deploy this app to a DIY cartridge. It uses a customized version of the cartridge openshift-diy-nginx-php (https://github.com/boekkooi/openshift-diy-nginx-php).
 
 ### Local Preparations
 
@@ -23,14 +13,15 @@ Note: the build action hook also creates a `hhvm` symlink in Openshift data dire
 
 ### Deploy Files using Git
 
-Make sure all local changes are committed to master, then run `git push openshift <LOCAL BRANCH NAME>:master`.
+1. Merge all changes to the Openshift deploy branch.
+2. Make sure all local changes are committed, then run `git push openshift <LOCAL OPENSHIFT DEPLOY BRANCH NAME>:master`.
 You might need to force the push using the `-f` flag.
 
 On the first deploy, 
 
 1. Run `rhc ssh <APPLICATION_NAME>`
 2. Run `cd app-root/repo`
-3. Run `$OPENSHIFT_DATA_DIR/hhvm artisan migrate` to create tables. You might need to force the migration on production.
+3. Run `php artisan migrate` to create tables. You might need to force the migration on production.
 3. Move existing data, if any.
 
 ### Existing Data

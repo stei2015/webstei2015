@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Vendor directory must be pushed too
+
+# Replace storage directory with a link to a storage directory in the Openshift data directory
+
+if [ ! -d "$OPENSHIFT_DATA_DIR/storage" ]; then
+        echo 'No existing storage found'
+        echo 'Copying storage directory from application repository storage directory'
+        cp -r --preserve "$OPENSHIFT_REPO_DIR/storage" $OPENSHIFT_DATA_DIR
+        chmod -R 777 "$OPENSHIFT_REPO_DIR/storage"
+fi
+
+echo 'Deleting existing application storage directory in application repository'
+rm -rf "$OPENSHIFT_REPO_DIR/storage"
+
+echo 'Linking storage to Openshift data directory'
+ln -s $OPENSHIFT_DATA_DIR/storage "$OPENSHIFT_REPO_DIR/storage"
