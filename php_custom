@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Uses Openshift cartridge's PHP 5.6 if available
+
+if [ -d ${OPENSHIFT_RUNTIME_DIR}/php5/bin ];then
+	${OPENSHIFT_RUNTIME_DIR}/php5/bin/php "$@"
+else
+	php "$@"
+fi
