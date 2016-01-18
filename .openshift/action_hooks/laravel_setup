@@ -3,7 +3,12 @@
 # Refer to https://blog.tommyku.com/blog/setting-up-laravel-5-0-for-openshift
 # with modification: added --prefer-source and --no-interaction flags to composer install to prevent Github rate limit errors
 # (see https://circleci.com/docs/composer-api-rate-limit)
-# 
+
+# Make sure alias is set (copied from bash_profile.tmpl)
+
+alias npm='${OPENSHIFT_RUNTIME_DIR}/bin/npm'
+alias php='${OPENSHIFT_RUNTIME_DIR}/php5/bin/php'
+alias php-fpm='${OPENSHIFT_RUNTIME_DIR}/php5/sbin/php-fpm'
 
 # Set up Composer
 
