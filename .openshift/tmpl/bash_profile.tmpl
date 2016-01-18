@@ -1,6 +1,9 @@
 # Export
 export OPENSHIFT_RUNTIME_DIR=${OPENSHIFT_DIY_DIR}/runtime/
 
+# Set option to expand aliases even in non-interactive scripts, otherwise some Composer scripts won't work
+shopt -s expand_aliases
+
 # We can't use PATH because of OpenShift
 alias npm='${OPENSHIFT_RUNTIME_DIR}/bin/npm'
 alias php='${OPENSHIFT_RUNTIME_DIR}/php5/bin/php'

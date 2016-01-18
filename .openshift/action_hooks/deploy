@@ -28,9 +28,6 @@ rm -rf ${BUILD_DIR}
 bash_profile=${OPENSHIFT_DATA_DIR}/.bash_profile
 echo "Copy bash profile."
 
-# Set option to expand aliases even in non-interactive scripts, otherwise some Composer scripts won't work
-shopt -s expand_aliases
-
 cp ${TEMPLATE_DIR}/bash_profile.tmpl ${bash_profile}
 
 # Setup Laravel
