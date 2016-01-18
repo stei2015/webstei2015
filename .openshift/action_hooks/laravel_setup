@@ -4,22 +4,16 @@
 # with modification: added --prefer-source and --no-interaction flags to composer install to prevent Github rate limit errors
 # (see https://circleci.com/docs/composer-api-rate-limit)
 
-# Make sure alias is set (copied from bash_profile.tmpl)
-
-alias npm='${OPENSHIFT_RUNTIME_DIR}/bin/npm'
-alias php='${OPENSHIFT_RUNTIME_DIR}/php5/bin/php'
-alias php-fpm='${OPENSHIFT_RUNTIME_DIR}/php5/sbin/php-fpm'
-
 # Set up Composer
 
 export COMPOSER_HOME="$OPENSHIFT_DATA_DIR/.composer"
 
 if [ ! -f "$OPENSHIFT_DATA_DIR/composer.phar" ]; then
         echo 'Installing Composer'
-        curl -s https://getcomposer.org/installer | php -- --quiet --install-dir=$OPENSHIFT_DATA_DIR
+        curl -s https://getcomposer.org/installer | ${OPENSHIFT_RUNTIME_DIR}/php5/bin/php -- --quiet --install-dir=$OPENSHIFT_DATA_DIR
 else
         echo 'Updating Composer'
-        php $OPENSHIFT_DATA_DIR/composer.phar -q --no-ansi self-update
+        ${OPENSHIFT_RUNTIME_DIR}/php5/bin/php $OPENSHIFT_DATA_DIR/composer.phar -q --no-ansi self-update
 fi
 
 # composer install
@@ -31,7 +25,7 @@ else
         echo 'Installing/Updating dependencies'; 
         unset GIT_DIR ; 
         cd $OPENSHIFT_REPO_DIR ; 
-        php $OPENSHIFT_DATA_DIR/composer.phar --no-ansi install --prefer-source --no-interaction ;
+        ${OPENSHIFT_RUNTIME_DIR}/php5/bin/php $OPENSHIFT_DATA_DIR/composer.phar --no-ansi install --prefer-source --no-interaction ;
 fi
 
 # Replace storage directory with a link to a storage directory in the Openshift data directory
