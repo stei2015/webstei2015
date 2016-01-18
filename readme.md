@@ -30,3 +30,8 @@ Upload all existing data (profile pictures etc.) to `app-root/data/storage`.
 ### Environment
 
 To set the application environment between development/production, run `rhc env set APPLICATION_ENV=development`, and then restart the application using `rhc app-restart <APPLICATION_NAME>`
+
+### Troubleshooting
+
+- Encryption key errors: make sure the app key is set properly (length must be exactly 32 chars).
+- MySQL errors: try running `php artisan cache:clear` manually to rebuild Laravel configuration according to the current Openshift environment variables

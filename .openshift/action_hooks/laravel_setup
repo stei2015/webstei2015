@@ -44,3 +44,6 @@ rm -rf "$OPENSHIFT_REPO_DIR/storage"
 
 echo 'Linking storage to Openshift data directory'
 ln -s $OPENSHIFT_DATA_DIR/storage "$OPENSHIFT_REPO_DIR/storage"
+
+# Cache Laravel config to load Openshift environment variables
+${OPENSHIFT_RUNTIME_DIR}/php5/bin/php artisan config:cache
