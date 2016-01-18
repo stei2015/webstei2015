@@ -1,8 +1,37 @@
 #!/bin/bash
 
-# Vendor directory must be pushed too
+# Refer to https://blog.tommyku.com/blog/setting-up-laravel-5-0-for-openshift
+# with modification: added --prefer-source and --no-interaction flags to composer install to prevent Github rate limit errors
+# (see https://circleci.com/docs/composer-api-rate-limit)
+# 
+
+# Set up Composer
+
+export COMPOSER_HOME="$OPENSHIFT_DATA_DIR/.composer"
+
+if [ ! -f "$OPENSHIFT_DATA_DIR/composer.phar" ]; then
+        echo 'Installing Composer'
+        curl -s https://getcomposer.org/installer | php -- --quiet --install-dir=$OPENSHIFT_DATA_DIR
+else
+        echo 'Updating Composer'
+        php $OPENSHIFT_DATA_DIR/composer.phar -q --no-ansi self-update
+fi
+
+# composer install
+
+if [ -d "$OPENSHIFT_REPO_DIR/vendor" ]; then
+        echo 'Dependencies already installed, Moving on...'
+else
+        echo 'Hang in there, we are getting ready to Install/Update dependencies'
+        echo 'Installing/Updating dependencies'; 
+        unset GIT_DIR ; 
+        cd $OPENSHIFT_REPO_DIR ; 
+        php $OPENSHIFT_DATA_DIR/composer.phar --no-ansi install --prefer-source --no-interaction ;
+fi
 
 # Replace storage directory with a link to a storage directory in the Openshift data directory
+
+echo "Looking for existing storage directory in Openshift data directory"
 
 if [ ! -d "$OPENSHIFT_DATA_DIR/storage" ]; then
         echo 'No existing storage found'

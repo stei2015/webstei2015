@@ -9,14 +9,11 @@ Deploy this app to a DIY cartridge. It uses a customized version of the cartridg
 1. Install rhc and run `rhc setup`
 2. Navigate to the project directory
 3. Run `rhc show-app <APPLICATION_NAME>`, note the git repository address
-4. Run `git remote add openshift <GIT-REPOSITORY-ADDRESS>`
+4. Run `git remote add openshift <GIT_REPOSITORY_ADDRESS>`
 
 ### Deploy Files using Git
 
-1. Make sure all changes are commited.
-2. Switch to the Openshift deploy branch using `git checkout deploy-openshift`
-3. Merge all changes to this branch using `git merge <SOURCE_BRANCH>`
-4. Run `git push -f openshift deploy-openshift:master`
+Make sure all changes are commited, then run `git push -f openshift <LOCAL_BRANCH_NAME>:master`
 
 On the first deploy, 
 
