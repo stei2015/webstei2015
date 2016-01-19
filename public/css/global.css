@@ -244,8 +244,9 @@ body {
   cursor: pointer;
 }
 
-.panel-grid-item > .panel-heading small {
+.panel-grid-item > .panel-heading span {
   font-weight: bold;
+  font-size: 0.8em;
 }
 
 .panel-grid-item:hover, .panel-grid-item:focus {

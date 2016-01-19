@@ -71,6 +71,9 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 		Route::get('/', 'Event@index');
 
 		Route::get('angelsandmortals', 'Events\AngelsAndMortals@index');
+		Route::post('angelsandmortals/guess', 'Events\AngelsAndMortals@guess');
+		Route::post('angelsandmortals/messagemortal', 'Events\AngelsAndMortals@messageMortal');
+		Route::post('angelsandmortals/messageangel', 'Events\AngelsAndMortals@messageAngel');
 	});
 
 });

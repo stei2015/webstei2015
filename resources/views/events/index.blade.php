@@ -23,7 +23,6 @@
 		  </div>
 		  <div class="panel-body">
 		    <div class="panel-image" style="background: url('{{ url('img/events/angelsandmortals.jpg') }}') repeat scroll center center / cover #ccc;"></div>
-		    Deskripsi
 		  </div>
 		</a>
 
