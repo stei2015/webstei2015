@@ -10,4 +10,8 @@
 		<div class="alert alert-info">{{ session('info') }}</div>
 	@endif
 
+	@if (session('warning') !== null)
+		<div class="alert alert-warning">{{ session('warning') }}</div>
+	@endif
+
 </div>

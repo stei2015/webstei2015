@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Events;
 
 use Illuminate\Http\Request;
 
+use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Event_AngelsAndMortals.php;
-use App\Message.php;
-use App\User.php;
+use App\Event_AngelsAndMortals;
+use App\Message;
+use App\User;
 
 class AngelsAndMortals extends Controller
 {
@@ -22,13 +23,16 @@ class AngelsAndMortals extends Controller
      * @param  integer  $nim
      * @return array
      */
-    private function getAngelsAndMortalsData($nim = null) {
+    protected function getAngelsAndMortalsData($nim = null)
+    {
         if ($nim === null) $nim = Auth::user()->nim;
 
         $data = Event_AngelsAndMortals::find($nim);
         if ($data === null) return null;
 
         $angel = Event_AngelsAndMortals::where('mortal', '=', $nim)->value('nim');
+
+        if ($data->guess === 0) $data->guess = null;
 
         return [
             'angel'  => $angel,
@@ -47,7 +51,7 @@ class AngelsAndMortals extends Controller
     public function index(Request $request)
     {
         $nim = Auth::user()->nim;
-        $data = getAngelsAndMortalsData($nim);
+        $data = $this->getAngelsAndMortalsData($nim);
 
         if ($data === null) {
             return view('events.angelsandmortals', [
@@ -55,25 +59,25 @@ class AngelsAndMortals extends Controller
             ]);
         }
 
-        $mortalMessages = Messages::where('type', '=', 'angelsandmortals')
-            ->where(function ($query) {
-                $query->where(function ($queryA) {
+        $mortalMessages = Message::where('type', '=', 'angelsandmortals')
+            ->where(function ($query) use ($nim, $data) {
+                $query->where(function ($queryA) use ($nim, $data) {
                     $queryA->where('from', '=', $nim)->where('to', '=', $data['mortal']);
-                })->orWhere(function ($queryB) {
+                })->orWhere(function ($queryB) use ($nim, $data) {
                     $queryB->where('to', '=', $nim)->where('from', '=', $data['mortal']);
                 });
             })
-            ->orderBy('created_at', 'asc');
+            ->orderBy('created_at', 'asc')->get();
 
-        $angelMessages = Messages::where('type', '=', 'angelsandmortals')
-            ->where(function ($query) {
-                $query->where(function ($queryA) {
+        $angelMessages = Message::where('type', '=', 'angelsandmortals')
+            ->where(function ($query) use ($nim, $data) {
+                $query->where(function ($queryA) use ($nim, $data) {
                     $queryA->where('from', '=', $nim)->where('to', '=', $data['angel']);
-                })->orWhere(function ($queryB) {
+                })->orWhere(function ($queryB) use ($nim, $data) {
                     $queryB->where('to', '=', $nim)->where('from', '=', $data['angel']);
                 });
             })
-            ->orderBy('created_at', 'asc');
+            ->orderBy('created_at', 'asc')->get();
 
         $mortal = User::find($data['mortal']);
         $guess = User::find($data['guess']);
@@ -81,9 +85,9 @@ class AngelsAndMortals extends Controller
         return view('events.angelsandmortals', [
             'isPlayer' => true,
             'mortal' => $data['mortal'],
-            'mortalName' => $mortal !== null ? $mortal->nama_lengkap : '',
+            'mortalName' => $mortal !== null ? $mortal->nama_lengkap : '[ Nama tidak ada di data ]',
             'guess' => $data['guess'],
-            'guessName' => $guess !== null ? $guess->nama_lengkap : '',
+            'guessName' => $guess !== null ? $guess->nama_lengkap : $data['guess'],
             'mortalMessages' => $mortalMessages,
             'angelMessages' => $angelMessages,
         ]);
@@ -98,17 +102,17 @@ class AngelsAndMortals extends Controller
     public function guess(Request $request)
     {
         $nim = Auth::user()->nim;
-        $data = getAngelsAndMortalsData($nim);
+        $data = $this->getAngelsAndMortalsData($nim);
 
         if ($data === null) {
             abort(403);
         }
 
         $this->validate($request, [
-            $nim => 'required|numeric|min:16515001|max:16515500',
+            'nim' => 'required|numeric|min:16515001|max:16515500',
         ]);
 
-        Event_AngelsAndMortals::where('nim', '=', $nim)->update(['guess' => $request['nim']])
+        Event_AngelsAndMortals::where('nim', '=', $nim)->update(['guess' => $request['nim']]);
 
         return redirect('events/angelsandmortals')->with('info', 'Tebakan berhasil disimpan');
     }
@@ -122,11 +126,15 @@ class AngelsAndMortals extends Controller
     public function messageMortal(Request $request)
     {
         $nim = Auth::user()->nim;
-        $data = getAngelsAndMortalsData($nim);
+        $data = $this->getAngelsAndMortalsData($nim);
 
         if ($data === null) {
             abort(403);
         }
+
+        $this->validate($request, [
+            'message' => 'required',
+        ]);
 
         $message = new Message;
         $message->from = $nim;
@@ -147,11 +155,19 @@ class AngelsAndMortals extends Controller
     public function messageAngel(Request $request)
     {
         $nim = Auth::user()->nim;
-        $data = getAngelsAndMortalsData($nim);
+        $data = $this->getAngelsAndMortalsData($nim);
 
         if ($data === null) {
             abort(403);
         }
+
+        if ($data['angel'] === null) {
+            return redirect('events/angelsandmortals')->with('warning', 'Tidak dapat mengirim pesan; kamu ternyata tidak memiliki angel :(');
+        }
+
+        $this->validate($request, [
+            'message' => 'required',
+        ]);
 
         $message = new Message;
         $message->from = $nim;

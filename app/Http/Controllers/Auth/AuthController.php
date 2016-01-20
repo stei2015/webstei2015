@@ -16,7 +16,7 @@ class AuthController extends Controller
 
     protected $redirectLogin = '/';
     protected $redirectLogout = '/login';
-    protected $redirectRegister = '/studentdata';
+    protected $redirectRegister = '/';
     protected $usernameField = 'username';
 
     /**
@@ -120,12 +120,13 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
+
         $this->validate($request, [
             'nim' => 'required|numeric|min:16515001|max:16515500|unique:users',
             'username' => 'required|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
-            'regcode' => config('app.regcode') ? 'required|same:'.config('app.regcode') : '',
-        ]);;
+            'regcode' => config('app.regcode') ? 'required|regex:/'.config('app.regcode').'/' : '',
+        ]);
 
         $newUser = new User;
         $newUser->nim = $request['nim'];
