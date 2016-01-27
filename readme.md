@@ -34,4 +34,4 @@ To set the application environment between development/production, run `rhc env 
 ### Troubleshooting
 
 - Encryption key errors: make sure the app key is set properly (length must be exactly 32 chars).
-- MySQL errors: try running `php artisan cache:clear` manually to rebuild Laravel configuration according to the current Openshift environment variables
+- MySQL errors: try running `php artisan cache:clear` and `php artisan config:cache` manually to rebuild Laravel configuration according to the current Openshift environment variables
