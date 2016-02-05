@@ -15,6 +15,11 @@ use App\User;
 class AngelsAndMortals extends Controller
 {
 
+    protected $registrationStartDate = new DateTime("00:00:00 2016-01-01");
+    protected $gameStartDate = new DateTime("12:00:00 2016-01-18");
+    protected $gameEndDate = new DateTime("23:59:59 2016-02-07");
+    protected $completeResultsLink = null; // e.g. 'anm-round1-results.pdf'
+
     /**
      * Gets angel, mortal, and guess data for the specified NIM.
      * If the NIM is not specified, it uses the currently logged in user.
@@ -41,6 +46,36 @@ class AngelsAndMortals extends Controller
         ];
     }
 
+
+    /**
+     * Processes a registration request
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $nim = Auth::user()->nim;
+        $now = new DateTime("now");
+
+        if ($now < $this->registrationStartDate) {
+            return redirect('events/angelsandmortals')->with('warning', 'Registrasi gagal - periode registrasi belum dimulai');
+        }
+
+        if ($now > $this->gameStartDate) {
+            return redirect('events/angelsandmortals')->with('warning', 'Registrasi gagal - periode registrasi telah berakhir');
+        }
+
+        $this->validate(['nim' => $nim], [
+            'nim' => 'required|numeric|min:16515001|max:16515500|unique:nim',
+        ]);
+        
+        $newParticipant = new Event_AngelsAndMortals;
+        $newParticipant->nim = $nim;
+        $newParticipant->save();
+
+        return redirect('events/angelsandmortals')->with('info', 'Registrasi berhasil');
+    }
     
 	/**
      * Shows index page
@@ -52,12 +87,45 @@ class AngelsAndMortals extends Controller
     {
         $nim = Auth::user()->nim;
         $data = $this->getAngelsAndMortalsData($nim);
+        $now = new DateTime("now");
+        $isPlayer = $data !== null;
+        
+        // Before the game starts or if the game is running and you are not a participant, show registration view
 
-        if ($data === null) {
-            return view('events.angelsandmortals', [
-                'isPlayer' => false,
+        if ($now < $this->gameStartDate || !$isPlayer) {
+            return view('events.angelsandmortals.register', [
+                'isPlayer' => $isPlayer,
+                'registrationStartDate' => $this->registrationStartDate,
+                'gameStartDate' => $this->gameStartDate,
             ]);
         }
+
+        // If the game has ended, show the game results view
+
+        if ($now > $this->gameEndDate) {
+
+            if ($isPlayer) {
+
+                $angel = User::find($data['angel']);
+                $guess = User::find($data['guess']);
+
+                return view('events.angelsandmortals.result', [
+                    'isPlayer' => $isPlayer,
+                    'guess' => $data['guess'],
+                    'guessName' => $guess !== null ? $guess->nama_lengkap : $data['guess'],
+                    'angel' => $data['angel'],
+                    'angelName' => $angel !== null ? $angel->nama_lengkap : $data['angel'],
+                    'resultsLink' => $this->completeResultsLink,
+                ]);
+            }
+
+            return view('events.angelsandmortals.result', [
+                'isPlayer' => $isPlayer,
+                'resultsLink' => $this->completeResultsLink,
+            ]);
+        }
+
+        // If the game is in progress and the current user is participating, show game view
 
         $mortalMessages = Message::where('type', '=', 'angelsandmortals')
             ->where(function ($query) use ($nim, $data) {
@@ -82,8 +150,7 @@ class AngelsAndMortals extends Controller
         $mortal = User::find($data['mortal']);
         $guess = User::find($data['guess']);
 
-        return view('events.angelsandmortals', [
-            'isPlayer' => true,
+        return view('events.angelsandmortals.game', [
             'mortal' => $data['mortal'],
             'mortalName' => $mortal !== null ? $mortal->nama_lengkap : '[ Nama tidak ada di data ]',
             'guess' => $data['guess'],
@@ -103,8 +170,9 @@ class AngelsAndMortals extends Controller
     {
         $nim = Auth::user()->nim;
         $data = $this->getAngelsAndMortalsData($nim);
+        $now = new DateTime("now");
 
-        if ($data === null) {
+        if ($data === null || ($now < $this->gameStartDate) || ($now > $this->gameEndDate)) {
             abort(403);
         }
 
@@ -127,8 +195,9 @@ class AngelsAndMortals extends Controller
     {
         $nim = Auth::user()->nim;
         $data = $this->getAngelsAndMortalsData($nim);
+        $now = new DateTime("now");
 
-        if ($data === null) {
+        if ($data === null || ($now < $this->gameStartDate) || ($now > $this->gameEndDate)) {
             abort(403);
         }
 
@@ -156,8 +225,9 @@ class AngelsAndMortals extends Controller
     {
         $nim = Auth::user()->nim;
         $data = $this->getAngelsAndMortalsData($nim);
+        $now = new DateTime("now");
 
-        if ($data === null) {
+        if ($data === null || ($now < $this->gameStartDate) || ($now > $this->gameEndDate)) {
             abort(403);
         }
 
