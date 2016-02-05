@@ -115,7 +115,7 @@ class AngelsAndMortals extends Controller
                     'guessName' => $guess !== null ? $guess->nama_lengkap : $data['guess'],
                     'angel' => $data['angel'],
                     'angelName' => $angel !== null ? $angel->nama_lengkap : $data['angel'],
-                    'resultsLink' => $this->completeResultsLink,
+                    'completeResultsLink' => $this->completeResultsLink,
                 ]);
             }
 
