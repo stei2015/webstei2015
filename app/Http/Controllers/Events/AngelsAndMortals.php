@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Events;
 use Illuminate\Http\Request;
 
 use Auth;
+use \DateTime;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -15,10 +16,33 @@ use App\User;
 class AngelsAndMortals extends Controller
 {
 
-    protected $registrationStartDate = new DateTime("00:00:00 2016-01-01");
-    protected $gameStartDate = new DateTime("12:00:00 2016-01-18");
-    protected $gameEndDate = new DateTime("23:59:59 2016-02-07");
-    protected $completeResultsLink = null; // e.g. 'anm-round1-results.pdf'
+    /**
+     *
+     * ANM round deploy instructions:
+     * 1. Backup database
+     * 2. Clear previous ANM data and messages from DB
+     * 3. Set dates, results link, round
+     * 4. Deploy to Openshift
+     * 5. Before game starts, randomize mortal list
+     *
+     */
+
+    // TODO: add admin page, view all messages page, view ANM data page, admin guards
+
+    protected $gameInfo;
+
+    function __construct() {
+        //parent::__construct(); // The Controller class apparently has no existing constructor
+
+        $this->gameInfo = [
+            'round' => 1,
+            'registrationStartDate' => new DateTime("2016-01-01 00:00:00"),
+            'registrationEndDate' => new DateTime("2016-01-17 12:00:00"),
+            'gameStartDate' => new DateTime("2016-01-18 12:00:00"),
+            'gameEndDate' => new DateTime("2016-02-07 23:59:59"),
+            'completeResultsLink' => null, // e.g. 'anm-round1-results.pdf'
+        ];
+    }
 
     /**
      * Gets angel, mortal, and guess data for the specified NIM.
@@ -58,17 +82,18 @@ class AngelsAndMortals extends Controller
         $nim = Auth::user()->nim;
         $now = new DateTime("now");
 
-        if ($now < $this->registrationStartDate) {
+        if ($now < $this->gameInfo['registrationStartDate']) {
             return redirect('events/angelsandmortals')->with('warning', 'Registrasi gagal - periode registrasi belum dimulai');
         }
 
-        if ($now > $this->gameStartDate) {
+        if ($now > $this->gameInfo['registrationEndDate']) {
             return redirect('events/angelsandmortals')->with('warning', 'Registrasi gagal - periode registrasi telah berakhir');
         }
 
-        $this->validate(['nim' => $nim], [
-            'nim' => 'required|numeric|min:16515001|max:16515500|unique:nim',
-        ]);
+        $data = Event_AngelsAndMortals::find($nim);
+        if ($data !== null) {
+            return redirect('events/angelsandmortals')->with('warning', 'Kamu sudah terdaftar');
+        }
         
         $newParticipant = new Event_AngelsAndMortals;
         $newParticipant->nim = $nim;
@@ -88,21 +113,11 @@ class AngelsAndMortals extends Controller
         $nim = Auth::user()->nim;
         $data = $this->getAngelsAndMortalsData($nim);
         $now = new DateTime("now");
-        $isPlayer = $data !== null;
-        
-        // Before the game starts or if the game is running and you are not a participant, show registration view
-
-        if ($now < $this->gameStartDate || !$isPlayer) {
-            return view('events.angelsandmortals.register', [
-                'isPlayer' => $isPlayer,
-                'registrationStartDate' => $this->registrationStartDate,
-                'gameStartDate' => $this->gameStartDate,
-            ]);
-        }
+        $isPlayer = $data !== null;    
 
         // If the game has ended, show the game results view
 
-        if ($now > $this->gameEndDate) {
+        if ($now > $this->gameInfo['gameEndDate']) {
 
             if ($isPlayer) {
 
@@ -115,13 +130,22 @@ class AngelsAndMortals extends Controller
                     'guessName' => $guess !== null ? $guess->nama_lengkap : $data['guess'],
                     'angel' => $data['angel'],
                     'angelName' => $angel !== null ? $angel->nama_lengkap : $data['angel'],
-                    'completeResultsLink' => $this->completeResultsLink,
+                    'gameInfo' => $this->gameInfo,
                 ]);
             }
 
             return view('events.angelsandmortals.result', [
                 'isPlayer' => $isPlayer,
-                'resultsLink' => $this->completeResultsLink,
+                'gameInfo' => $this->gameInfo,
+            ]);
+        }
+
+        // Before the game starts or if the game is running and you are not a participant, show registration view
+
+        if ($now < $this->gameInfo['gameStartDate'] || !$isPlayer) {
+            return view('events.angelsandmortals.register', [
+                'isPlayer' => $isPlayer,
+                'gameInfo' => $this->gameInfo,
             ]);
         }
 
@@ -157,6 +181,7 @@ class AngelsAndMortals extends Controller
             'guessName' => $guess !== null ? $guess->nama_lengkap : $data['guess'],
             'mortalMessages' => $mortalMessages,
             'angelMessages' => $angelMessages,
+            'gameInfo' => $this->gameInfo,
         ]);
     }
 
@@ -172,7 +197,7 @@ class AngelsAndMortals extends Controller
         $data = $this->getAngelsAndMortalsData($nim);
         $now = new DateTime("now");
 
-        if ($data === null || ($now < $this->gameStartDate) || ($now > $this->gameEndDate)) {
+        if ($data === null || ($now < $this->gameInfo['gameStartDate']) || ($now > $this->gameInfo['gameEndDate'])) {
             abort(403);
         }
 
@@ -197,7 +222,7 @@ class AngelsAndMortals extends Controller
         $data = $this->getAngelsAndMortalsData($nim);
         $now = new DateTime("now");
 
-        if ($data === null || ($now < $this->gameStartDate) || ($now > $this->gameEndDate)) {
+        if ($data === null || ($now < $this->gameInfo['gameStartDate']) || ($now > $this->gameInfo['gameEndDate'])) {
             abort(403);
         }
 
@@ -227,7 +252,7 @@ class AngelsAndMortals extends Controller
         $data = $this->getAngelsAndMortalsData($nim);
         $now = new DateTime("now");
 
-        if ($data === null || ($now < $this->gameStartDate) || ($now > $this->gameEndDate)) {
+        if ($data === null || ($now < $this->gameInfo['gameStartDate']) || ($now > $this->gameInfo['gameEndDate'])) {
             abort(403);
         }
 

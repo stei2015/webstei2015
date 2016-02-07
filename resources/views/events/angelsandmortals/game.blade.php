@@ -72,141 +72,116 @@
 		@include('parts.alert')
 
 		<div class="page-header">
-			<h1>Angels &amp; Mortals</h1>
+			<h1>Angels &amp; Mortals <small>Round {{ $gameInfo['round'] }}</small></h1>
 		</div>
 
-		@if ($isPlayer)
+		<div class="row">
 
-			<div class="row">
-
-				<div class="col-md-6">
-					<div class="panel panel-default">
-						<div class="panel-body top-panel">
-							<p>Lakukanlah kebaikan untuk <i>mortal</i>-mu!</p>
-							<div class="mortal-name"><a href="{{ url('studentdata/'.$mortal) }}">{{ $mortalName }}</a></div>
-							<div class="mortal-nim">{{ $mortal }}</div>
-					    </div>
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-body top-panel">
+						<p>Lakukanlah kebaikan untuk <i>mortal</i>-mu!</p>
+						<div class="mortal-name"><a href="{{ url('studentdata/'.$mortal) }}">{{ $mortalName }}</a></div>
+						<div class="mortal-nim">{{ $mortal }}</div>
 				    </div>
-				</div>
-
-				<div class="col-md-6">
-					<div class="panel panel-default">
-						<div class="panel-body top-panel">
-
-							<form action="{{ url('events/angelsandmortals/guess') }}" method="POST">
-								{{ csrf_field() }}
-								<div class="input-group @if ($errors->has('nim')) has-error @endif">
-							      <input type="text" name="nim" class="form-control" value="{{ old('nim') !== null ? old('nim') : '' }}" placeholder="Tebak NIM angel-mu disini!">
-							      <span class="input-group-btn">
-							      	<button class="btn btn-primary">Tebak</button>
-							      </span>
-							    </div>
-							</form>
-							<div style="height:5px;"></div>
-							<p class="hint">Petunjuk: cari NIM <i>mortal</i>-mu di <a href="{{ url('studentdata') }}">Data Mahasiswa STEI</a></p>
-
-						    <strong>Tebakan saat ini: </strong> 
-						    @if ($guess !== null)
-						    	<a href="{{ url('studentdata/'.$guess) }}">{{ $guessName }}</a>
-						    @else
-						    	Belum ada tebakan
-						    @endif
-					    </div>
-				    </div>
-				</div>
-
+			    </div>
 			</div>
 
-			<div class="row">
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-body top-panel">
 
-				<div class="col-md-6">
-					<div class="panel panel-default">
-						<div class="panel-body">
+						<form action="{{ url('events/angelsandmortals/guess') }}" method="POST">
+							{{ csrf_field() }}
+							<div class="input-group @if ($errors->has('nim')) has-error @endif">
+						      <input type="text" name="nim" class="form-control" value="{{ old('nim') !== null ? old('nim') : '' }}" placeholder="Tebak NIM angel-mu disini!">
+						      <span class="input-group-btn">
+						      	<button class="btn btn-primary">Tebak</button>
+						      </span>
+						    </div>
+						</form>
+						<div style="height:5px;"></div>
+						<p class="hint">Petunjuk: cari NIM <i>mortal</i>-mu di <a href="{{ url('studentdata') }}">Data Mahasiswa STEI</a></p>
 
-							<div class="chat-window">
-
-								@forelse ($mortalMessages as $message)
-
-									<div class="chat @if ($message->from==auth()->user()->nim) self @endif">
-										<div class="chat-bubble">{{ $message->content }}</div>
-										<div class="chat-timestamp"><?php echo ($message->from == auth()->user()->nim) ? 'You' : 'Mortal'; ?> [{{ $message->created_at }}]</div>
-									</div>
-
-								@empty
-									<div class="hint"><i>Belum ada pesan masuk.</i></div>
-								@endforelse
-
-							</div>
-
-							<form action="{{ url('events/angelsandmortals/messagemortal') }}" method="POST">
-								{{ csrf_field() }}
-								<div class="input-group @if ($errors->has('message')) has-error @endif">
-							      <input type="text" name="message" class="form-control" value="{{ old('message') !== null ? old('message') : '' }}" placeholder="Kirim pesan untuk mortal-mu" required>
-							      <span class="input-group-btn">
-							      	<button class="btn btn-primary">Kirim</button>
-							      </span>
-							    </div>
-							</form>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-6">
-					<div class="panel panel-default">
-						<div class="panel-body">
-
-							<div class="chat-window">
-
-								@forelse ($angelMessages as $message)
-
-									<div class="chat @if ($message->from==auth()->user()->nim) self @endif">
-										<div class="chat-bubble">{{ $message->content }}</div>
-										<div class="chat-timestamp"><?php echo ($message->from == auth()->user()->nim) ? 'You' : 'Angel'; ?> [{{ $message->created_at }}]</div>
-									</div>
-
-								@empty
-									<div class="hint"><i>Belum ada pesan masuk.</i></div>
-								@endforelse
-
-							</div>
-
-							<form action="{{ url('events/angelsandmortals/messageangel') }}" method="POST">
-								{{ csrf_field() }}
-								<div class="input-group @if ($errors->has('message')) has-error @endif">
-							      <input type="text" name="message" class="form-control" value="{{ old('message') !== null ? old('message') : '' }}" placeholder="Kirim pesan untuk angel-mu" required>
-							      <span class="input-group-btn">
-							      	<button class="btn btn-primary">Kirim</button>
-							      </span>
-							    </div>
-							</form>
-						</div>
-					</div>
-				</div>
-
+					    <strong>Tebakan saat ini: </strong> 
+					    @if ($guess !== null)
+					    	<a href="{{ url('studentdata/'.$guess) }}">{{ $guessName }}</a>
+					    @else
+					    	Belum ada tebakan
+					    @endif
+				    </div>
+			    </div>
 			</div>
 
-		@else
+		</div>
 
-			<h3>A&amp;M Round 2!</h3>
+		<div class="row">
 
-			<p>Panitia Angels &amp; Mortals akan mengadakan A&amp;M round 2!<br>
-			Pendaftaran akan dibuka mulai <strong>Senin, 8 Februari 2016</strong> dan berakhir ketika Round 2 dimulai pada <strong>Jumat, 12 Februari 2016</strong>.</p>
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-body">
 
-			<h3>Apa sih A&amp;M?</h3>
+						<div class="chat-window">
 
-			<p>Dalam game ini, bla bla bla</p>
+							@forelse ($mortalMessages as $message)
 
-			<h3>Gimana cara daftarnya?</h3>
+								<div class="chat @if ($message->from==auth()->user()->nim) self @endif">
+									<div class="chat-bubble">{{ $message->content }}</div>
+									<div class="chat-timestamp"><?php echo ($message->from == auth()->user()->nim) ? 'You' : 'Mortal'; ?> [{{ $message->created_at }}]</div>
+								</div>
 
-			<p>Setelah pendaftaran dibuka, kunjungi halaman ini dan klik <strong>Register</strong>.</p>
+							@empty
+								<div class="hint"><i>Belum ada pesan masuk.</i></div>
+							@endforelse
 
-			<h3>Kalau mau tanya-tanya ke siapa ya?</h3>
+						</div>
 
-			<p>Untuk informasi, hubungi <a href="{{ url('/studentdata/16515120') }}">Tessa Angela</a>.<br>
-			Untuk dukungan teknis (masalah web) hubungi <a href="{{ url('/studentdata/16515119') }}">Jonathan Christopher</a>.
-			</p>
+						<form action="{{ url('events/angelsandmortals/messagemortal') }}" method="POST">
+							{{ csrf_field() }}
+							<div class="input-group @if ($errors->has('message')) has-error @endif">
+						      <input type="text" name="message" class="form-control" value="{{ old('message') !== null ? old('message') : '' }}" placeholder="Kirim pesan untuk mortal-mu" required>
+						      <span class="input-group-btn">
+						      	<button class="btn btn-primary">Kirim</button>
+						      </span>
+						    </div>
+						</form>
+					</div>
+				</div>
+			</div>
 
-		@endif
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-body">
+
+						<div class="chat-window">
+
+							@forelse ($angelMessages as $message)
+
+								<div class="chat @if ($message->from==auth()->user()->nim) self @endif">
+									<div class="chat-bubble">{{ $message->content }}</div>
+									<div class="chat-timestamp"><?php echo ($message->from == auth()->user()->nim) ? 'You' : 'Angel'; ?> [{{ $message->created_at }}]</div>
+								</div>
+
+							@empty
+								<div class="hint"><i>Belum ada pesan masuk.</i></div>
+							@endforelse
+
+						</div>
+
+						<form action="{{ url('events/angelsandmortals/messageangel') }}" method="POST">
+							{{ csrf_field() }}
+							<div class="input-group @if ($errors->has('message')) has-error @endif">
+						      <input type="text" name="message" class="form-control" value="{{ old('message') !== null ? old('message') : '' }}" placeholder="Kirim pesan untuk angel-mu" required>
+						      <span class="input-group-btn">
+						      	<button class="btn btn-primary">Kirim</button>
+						      </span>
+						    </div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
 
 	</div>
 
